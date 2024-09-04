@@ -1,0 +1,61 @@
+header {
+    background-color: #00623B; /* Starbucks green */
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .col-3, .col-9 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  
+  @media (min-width: 768px) {
+    .col-3 {
+      width: 25%;
+    }
+    .col-9 {
+      width: 75%;
+    }
+  }
+  
+  .inner-logo {
+    text-align: center;
+  }
+  
+  .inner-menu {
+    display: flex; /* Make the menu items display horizontally */
+    justify-content: space-between; /* Distribute items evenly with some spacing */
+    list-style: none; /* Remove list style */
+    padding: 0;
+  }
+  
+  .inner-menu li {
+    margin: 0 10px; /* Adjust spacing between menu items */
+  }
+  
+  .inner-menu a {
+    text-decoration: none;
+    color: #fff; /* Match text color to background */
+    padding: 10px 15px;
+  }
+  
+  .inner-menu a:hover {
+    background-color: #16733C; /* Darker shade of green for hover */
+  }
+  
+  footer.footer {
+    background-color: #00623B; /* Starbucks green */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }

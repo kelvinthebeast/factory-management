@@ -5,7 +5,7 @@ const route = require("./routes/client/index.route");
 const port = process.env.PORT;
 
 route(app);
-
+app.use(express.static("public"));
 app.set("view engine", "pug");
 app.set("views", "./views");
 
