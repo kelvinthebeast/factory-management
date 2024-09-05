@@ -1,6 +1,5 @@
 const { default: mongoose, model } = require("mongoose");
 const productSchema = new mongoose.Schema({
-
     id: Number,
     title: String,
     price: Number,
