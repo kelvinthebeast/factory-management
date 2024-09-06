@@ -2,9 +2,11 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const route = require("./routes/client/index.route");
+const adminRoute = require("./routes/admin/index.route");
 const port = process.env.PORT;
-
+// routes
 route(app);
+adminRoute(app);
 app.use(express.static("public"));
 app.set("view engine", "pug");
 app.set("views", "./views");
