@@ -1,102 +1,161 @@
 /* Header */
 header.header {
-    background-color: #343a40; /* Dark background for the header */
-    padding: 15px 0; /* Padding for spacing */
-    color: white; /* Text color */
+    background-color: #343a40;
+    /* Dark background for the header */
+    padding: 15px 0;
+    /* Padding for spacing */
+    color: white;
+    /* Text color */
 }
 
 header.header .inner-logo a {
-    color: white; /* Logo text color */
-    font-size: 1.5rem; /* Adjust font size */
-    font-weight: bold; /* Make logo bold */
-    text-decoration: none; /* Remove underline */
+    color: white;
+    /* Logo text color */
+    font-size: 1.5rem;
+    /* Adjust font size */
+    font-weight: bold;
+    /* Make logo bold */
+    text-decoration: none;
+    /* Remove underline */
 }
 
 header.header .row.align-items-center {
-    align-items: center; /* Align content vertically center */
+    align-items: center;
+    /* Align content vertically center */
 }
 
 /* Body */
 .body {
-    display: flex; /* Flexbox layout */
-    flex-direction: row; /* Side by side layout */
+    display: flex;
+    /* Flexbox layout */
+    flex-direction: row;
+    /* Side by side layout */
 }
 
 .main {
-    flex-grow: 1; /* Main section takes the remaining space */
-    padding: 20px; /* Add some padding to the main content */
-    background-color: #f8f9fa; /* Light background for the body */
+    flex-grow: 1;
+    /* Main section takes the remaining space */
+    padding: 20px;
+    /* Add some padding to the main content */
+    background-color: #f8f9fa;
+    /* Light background for the body */
 }
 
 /* Sidebar */
 .body .sider {
-    width: 250px; /* Fixed width for the sidebar */
-    background-color: #495057; /* Dark background for sidebar */
-    padding: 20px; /* Padding for content inside sidebar */
-    color: white; /* Text color for sidebar */
+    width: 250px;
+    /* Fixed width for the sidebar */
+    background-color: #495057;
+    /* Dark background for sidebar */
+    padding: 20px;
+    /* Padding for content inside sidebar */
+    color: white;
+    /* Text color for sidebar */
 }
+
 /* Ensure the body takes full height */
-html, body {
-    height: 100%; /* Set body and html height to 100% */
-    margin: 0; /* Remove default margins */
+html,
+body {
+    height: 100%;
+    /* Set body and html height to 100% */
+    margin: 0;
+    /* Remove default margins */
 }
 
 /* Main body layout */
 .body {
-    display: flex; /* Flexbox layout for body */
-    flex-direction: row; /* Side by side layout */
-    min-height: 100vh; /* Ensure the body takes the full viewport height */
+    display: flex;
+    /* Flexbox layout for body */
+    flex-direction: row;
+    /* Side by side layout */
+    min-height: 100vh;
+    /* Ensure the body takes the full viewport height */
 }
 
 /* Sidebar */
 .body .sider {
-    width: 250px; /* Fixed width for the sidebar */
-    background-color: #495057; /* Dark background for sidebar */
-    padding: 20px; /* Padding for content inside sidebar */
-    color: white; /* Text color for sidebar */
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    width: 250px;
+    /* Fixed width for the sidebar */
+    background-color: #495057;
+    /* Dark background for sidebar */
+    padding: 20px;
+    /* Padding for content inside sidebar */
+    color: white;
+    /* Text color for sidebar */
+    flex-shrink: 0;
+    /* Prevent sidebar from shrinking */
 }
 
 /* Main content */
 .main {
-    flex-grow: 1; /* Main section takes the remaining space */
-    padding: 20px; /* Add some padding to the main content */
-    background-color: #f8f9fa; /* Light background for the body */
+    flex-grow: 1;
+    /* Main section takes the remaining space */
+    padding: 20px;
+    /* Add some padding to the main content */
+    background-color: #f8f9fa;
+    /* Light background for the body */
 }
 
 /* Footer should align at the bottom */
 footer {
-    background-color: #343a40; /* Dark background for footer */
+    background-color: #343a40;
+    /* Dark background for footer */
     color: white;
     padding: 10px 0;
     text-align: center;
     width: 100%;
-    margin-top: auto; /* Push footer to the bottom if there's not enough content */
+    margin-top: auto;
+    /* Push footer to the bottom if there's not enough content */
 }
+
 /* Sidebar Menu */
 .body .sider .inner-menu {
-    margin-top: 20px; /* Add some spacing from the top */
+    margin-top: 20px;
+    /* Add some spacing from the top */
 }
 
 .body .sider .inner-menu ul {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0; /* Remove default padding */
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+    /* Remove default padding */
 }
 
 .body .sider .inner-menu ul li {
-    margin: 10px 0; /* Add space between each menu item */
+    margin: 10px 0;
+    /* Add space between each menu item */
 }
 
 .body .sider .inner-menu ul li a {
-    color: white; /* White text color to match the sidebar */
-    text-decoration: none; /* Remove underline */
-    padding: 10px 15px; /* Add some padding around links */
-    display: block; /* Make links block-level for full clickable area */
-    background-color: #6c757d; /* Slightly lighter shade for the menu items */
-    border-radius: 5px; /* Rounded corners */
+    color: white;
+    /* White text color to match the sidebar */
+    text-decoration: none;
+    /* Remove underline */
+    padding: 10px 15px;
+    /* Add some padding around links */
+    display: block;
+    /* Make links block-level for full clickable area */
+    background-color: #6c757d;
+    /* Slightly lighter shade for the menu items */
+    border-radius: 5px;
+    /* Rounded corners */
 }
 
 .body .sider .inner-menu ul li a:hover {
-    background-color: #adb5bd; /* Lighter hover color */
-    color: #343a40; /* Darker text color on hover */
+    background-color: #adb5bd;
+    /* Lighter hover color */
+    color: #343a40;
+    /* Darker text color on hover */
+}
+
+.badge-custom-active {
+    background-color: green;
+    /* Replace with your desired color */
+    color: white;
+}
+
+.badge-custom-inactive {
+    background-color: red;
+    /* Replace with your desired color */
+    color: white;
 }
