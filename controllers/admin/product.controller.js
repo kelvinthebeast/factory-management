@@ -14,8 +14,8 @@ module.exports.index = async (req, res) => {
 
     }
     const products = await Product.find(find);
-    console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
-    console.log(products);
+    // console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
+    // console.log(products);
 
     // console.log(products);
 

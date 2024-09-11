@@ -6,9 +6,15 @@ block main
   .card.mb-3
     .card-header Bộ lọc và Tìm kiếm
     .card-body
-      button(class="btn btn-sm ml-1 btn-outline-success active") Tất cả
-      button(class="btn btn-sm ml-1 btn-outline-success") Hoạt động
-      button(class="btn btn-sm ml-1 btn-outline-success") Dừng hoạt động
+      button(class="btn btn-sm ml-1 btn-outline-success active"
+              button-status=""
+              ) Tất cả
+      button(class="btn btn-sm ml-1 btn-outline-success"
+            button-status ="active"
+      ) Hoạt động
+      button(class="btn btn-sm ml-1 btn-outline-success"
+            button-status = "inactive"
+            ) Dừng hoạt động
 
   .container.mt-5
     h2.text-center.mb-4 Products List
