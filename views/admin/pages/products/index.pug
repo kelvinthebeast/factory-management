@@ -1,0 +1,22 @@
+extends ../../layouts/default.pug
+block main
+    h1 PRODUCTS MANAGEMENT PAGE
+
+
+    .container.mt-5
+      h2.text-center.mb-4 Products List
+      table.table.table-striped.table-bordered
+        thead.table-dark
+          tr
+            th Product ID
+            th Name
+            th Price
+            th Category
+        tbody
+          each product, index in products
+            tr
+              td #{product.id}
+              td #{product.name}
+              td #{product.price}
+              td #{product.category}
+    

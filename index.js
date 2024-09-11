@@ -11,9 +11,12 @@ app.use(express.static("public"));
 app.set("view engine", "pug");
 app.set("views", "./views");
 
+
+const systemConfig = require("./config/system")
 const database = require("./config/database");
 database.connect();
-
+// app local variables 
+app.locals.prefixAdmin = systemConfig.prefixAdmin; // tu h prefixAdmin se xuat hien trog tat ca file pug
 app.listen(port, () => {
     console.log(`App listen on port ${port}`);
 
