@@ -37,6 +37,8 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
 
     }
+
+    
     const products = await Product.find(find);
     // console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
     // console.log(products);
@@ -52,3 +54,4 @@ module.exports.index = async (req, res) => {
     })
     // res.send("PRODUCT MANGEMENT")
 };
+
