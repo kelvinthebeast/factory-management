@@ -37,8 +37,16 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
 
     }
+    // keyword ở đây là key mà người dùng sẽ cập nhật vào
+    let keyword = "";
+    if(req.query.keyword){
+        // asign for keyword and add into the object
+        keyword = req.query.keyword;
 
-    
+        // using regex
+        const regex = new RegExp(keyword, "i");
+        find.title = regex; 
+    }
     const products = await Product.find(find);
     // console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
     // console.log(products);
@@ -50,7 +58,8 @@ module.exports.index = async (req, res) => {
 
         pageTitle:"PRoduct MAnagement",
         products: products,
-        filterStatus: filterStatus
+        filterStatus: filterStatus,
+        keyword: keyword
     })
     // res.send("PRODUCT MANGEMENT")
 };
