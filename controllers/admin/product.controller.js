@@ -3,6 +3,7 @@
 const { query } = require("express");
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
+const searchHelper = require("../../helpers/search");
 module.exports.index = async (req, res) => {
 
     //filterStatus
@@ -19,15 +20,13 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
 
     }
-    // keyword ở đây là key mà người dùng sẽ cập nhật vào
-    let keyword = "";
-    if(req.query.keyword){
-        // asign for keyword and add into the object
-        keyword = req.query.keyword;
 
-        // using regex
-        const regex = new RegExp(keyword, "i");
-        find.title = regex; 
+    // optimize search by using regex
+    const objectSearch = searchHelper(req.query);
+    console.log(objectSearch);
+    
+    if(objectSearch.regex){
+        find.title = objectSearch.regex;
     }
     const products = await Product.find(find);
     // console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
@@ -41,7 +40,7 @@ module.exports.index = async (req, res) => {
         pageTitle:"PRoduct MAnagement",
         products: products,
         filterStatus: filterStatus,
-        keyword: keyword
+        keyword: objectSearch.keyword
     })
     // res.send("PRODUCT MANGEMENT")
 };
