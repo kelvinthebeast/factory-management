@@ -44,7 +44,6 @@ block main
 
   nav
     ul.pagination
-      if(pagination.totalPage > 0)
         if(pagination.currentPage > 1)
           li(class="page-item")
             button(class="page-link" button-pagination=pagination.currentPage - 1) Trang trước
