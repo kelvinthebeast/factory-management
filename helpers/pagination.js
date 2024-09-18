@@ -1,15 +1,16 @@
-// module.exports = async (objectPagination, query, countProducts ) => {
-//     if(query.page) {
-//         objectPagination.currentPage = parseInt(query.page)
-//     }
+module.exports = (objectPagination, query, countProducts) => {
+    if(query.page) {
+        objectPagination.currentPage = parseInt(query.page);
+    }
+    
+    objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
+    console.log(objectPagination.skip)
 
-//     objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItem;
-//     //get count
-//     // const countProducts = await Product.count(find);
+    
+    
 
+    const totalPage = Math.ceil(countProducts/objectPagination.limitItems);
+    objectPagination.totalPage = totalPage;
 
-//     const totalPage = Math.ceil(countProducts/objectPagination.limitItem)
-//     objectPagination.totalPage = totalPage;
-//     return objectPagination;
-
-// }
+    return objectPagination;
+}

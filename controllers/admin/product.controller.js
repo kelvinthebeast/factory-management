@@ -5,7 +5,7 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const { count } = require("moongose/models/user_model");
-// const paginationHelper = require("../../helpers/pagination");
+const paginationHelper = require("../../helpers/pagination");
 module.exports.index = async (req, res) => {
 
     //filterStatus
@@ -36,26 +36,19 @@ module.exports.index = async (req, res) => {
 
 
     // pagination
-    let objectPagination = {
+    const countProducts = await Product.count(find);
+    let objectPagination = paginationHelper({
         currentPage: 1,
         limitItems: 4
-    }
+    },
+    req.query,
+    countProducts
+)
     //end pagination
-    if(req.query.page) {
-        objectPagination.currentPage = parseInt(req.query.page);
-    }
     
-    objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
-    console.log(objectPagination.skip)
-
-    const countProducts = await Product.count(find);
-    
-
-    const totalPage = Math.ceil(countProducts/objectPagination.limitItems);
-    objectPagination.totalPage = totalPage;
     // console.log(totalPage);
     console.log(objectPagination)
-    
+
     // const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
     const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
     
