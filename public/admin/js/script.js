@@ -49,18 +49,22 @@ if(formSearch){
 //end form search
 
 //button pagination
-
 const buttonPagination = document.querySelectorAll("[button-pagination]");
-// console.log(buttonPagination)
-if(buttonPagination){
 
+if(buttonPagination){
     buttonPagination.forEach(button => {
         let url = new URL(window.location.href);
         button.addEventListener("click", ()=> {
-            const page =button.getAttribute("button-pagination");
+            page = button.getAttribute("button-pagination");
+            // console.log(page);
+
             url.searchParams.set("page", page);
+
             window.location.href = url.href;
+
+
         })
     })
+
 }
 //button pagination

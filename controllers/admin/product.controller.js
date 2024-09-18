@@ -4,7 +4,8 @@ const { query } = require("express");
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
-const paginationHelper = require("../../helpers/pagination");
+const { count } = require("moongose/models/user_model");
+// const paginationHelper = require("../../helpers/pagination");
 module.exports.index = async (req, res) => {
 
     //filterStatus
@@ -35,40 +36,30 @@ module.exports.index = async (req, res) => {
 
 
     // pagination
-    const countProducts = await Product.countDocuments(find);
-
-    let objectPagination = paginationHelper({
+    let objectPagination = {
         currentPage: 1,
-        limitItem: 4
-
-    },
-    req.query,
-    countProducts
-); 
-
-    // if(req.query.page) {
-    //     objectPagination.currentPage = parseInt(req.query.page)
-    // }
-
-    // objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItem;
-    // //get count
-    // // const countProducts = await Product.count(find);
-    // const countProducts = await Product.countDocuments(find);
-
-    // const totalPage = Math.ceil(countProducts/objectPagination.limitItem)
-    // objectPagination.totalPage = totalPage;
-    
+        limitItems: 4
+    }
     //end pagination
-
-    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
-
+    if(req.query.page) {
+        objectPagination.currentPage = parseInt(req.query.page);
+    }
     
-    // console.log(countProduct);
-    // console.log("ĐÂY LÀ SẢN PHẨM ĐANG TÌM");
-    // console.log(products);
+    objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
+    console.log(objectPagination.skip)
 
-    // console.log(products);
+    const countProducts = await Product.count(find);
+    
 
+    const totalPage = Math.ceil(countProducts/objectPagination.limitItems);
+    objectPagination.totalPage = totalPage;
+    // console.log(totalPage);
+    console.log(objectPagination)
+    
+    // const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
+    const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+    
+  
 
     res.render("admin/pages/products/index",{
 
