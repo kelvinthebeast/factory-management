@@ -10,7 +10,7 @@ module.exports = (query) => {
         class:""
     },
     {
-        name: "Tất cả",
+        name: "Dừng hoạt động",
         status: "inactive",
         class:""
     }

@@ -65,3 +65,22 @@ module.exports.index = async (req, res) => {
     // res.send("PRODUCT MANGEMENT")
 };
 
+//[GET]/admin/products/change-status/:status/:id --> [GET] --> PATCH
+module.exports.changeStatus = async (req, res) => {
+    // console.log(req.params);
+    // const id = req.params.id;
+    // const status = req.params.status;
+    
+
+    // res.send(`${status} - ${id}`);
+    console.log(req.params);
+    const id = req.params.id;
+    const status = req.params.status;
+    await Product.updateOne({_id: id},{status: status});
+    
+
+
+    res.redirect("back"); // khong quay ve trang so 1
+// req.query là sau dấu ?
+// params là sau dấu /
+}

@@ -5,10 +5,10 @@ module.exports = (app) => {
     // app.use("/", homeRoutes);
     // app.get("/", homeRoutes);
 
-    const PATH_ADMIN = systemConfig.profixAdmin;
+    const PATH_ADMIN = systemConfig.prefixAdmin;
     app.use("/admin/dashboard",dashboardRoutes);
     // app.use(PATH_ADMIN + `/products`,productRoutes);
-    app.use("/admin/products", productRoutes);
+    app.use(PATH_ADMIN + `/products`, productRoutes);
 
    
 }

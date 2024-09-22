@@ -36,11 +36,26 @@ block main
             td #{item.price}$
             td
               if (item.status === "active")
-                a(href="#" class="btn btn-sm ml-1 btn-outline-success") Hoạt động
+                a(
+                  href="javascript:;"
+                  data-status = item.status
+                  data-id=item.id
+                  button-change-status
+                 class="btn btn-sm ml-1 btn-outline-success") Hoạt động
               else
-                a(href="#" class="btn btn-sm ml-1 btn-outline-success") Dừng hoạt động
+                a(
+                  data-status = item.status
+                  data-id=item.id
+                  button-change-status 
+                  class="btn btn-sm ml-1 btn-outline-success") Dừng hoạt động
             td
               button.btn.btn-primary.btn-sm.mr-2(onclick=`editProduct(${item.id})`)  Edit  
               button.btn.btn-danger.btn-sm(onclick=`deleteProduct(${item.id})`) Delete
   +pagination(pagination)
-  
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  )
+  script(src="/admin/js/product.js") 
