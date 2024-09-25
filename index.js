@@ -4,6 +4,10 @@ const app = express();
 //change to patch methods
 app.use(methodOverride('_method'));
 require("dotenv").config();
+const bodyParser = require('body-parser')
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const route = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
 

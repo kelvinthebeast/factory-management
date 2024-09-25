@@ -1,6 +1,6 @@
 // [GET] /admin/products
 
-const { query } = require("express");
+const { query, response } = require("express");
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
@@ -87,6 +87,20 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/products/change-multi 
 module.exports.changeMulti = async (req, res) => {
-    console.log(req.body);
-    console.log("OKE CHANGE MULTIPLE");
+    const type = req.body.type;
+    console.log(type);
+    const ids = req.body.ids.split(", ");
+    switch (type) {
+        case "active":
+            await Product.updateMany({_id: { $in: ids }}, {status: "active"});
+            break;
+        case "inactive":
+            await Product.updateMany({_id: { $in: ids }}, {status: "inactive"});
+            break;
+        default:
+            break;
+    }
+
+    // res.send("OKE CHANGE MULTI")
+    res.redirect("back");
 }

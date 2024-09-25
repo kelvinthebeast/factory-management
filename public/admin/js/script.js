@@ -68,3 +68,76 @@ if(buttonPagination){
 
 }
 //button pagination
+
+// checkbox multi
+
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti) {
+    const inputCheckAll = checkboxMulti.querySelector("input[name='checkall']");
+    const inputIds = checkboxMulti.querySelectorAll("input[name='id']");
+
+    // console.log(inputCheckAll);
+    // console.log(inputIds);
+
+    inputCheckAll.addEventListener("click", () => {
+        console.log(inputCheckAll.checked);
+        if(inputCheckAll.checked) {
+            inputIds.forEach(input => {
+                input.checked = true;
+            });
+        } else {
+            inputIds.forEach(input => {
+                input.checked = false;
+            })
+            
+        }
+        
+    })
+
+
+    // logic single input
+    inputIds.forEach(input => {
+        input.addEventListener("click", ()=> {
+            let countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+            // console.log(countChecked);
+            // console.log(inputIds.length);
+            if(countChecked == inputIds.length) {
+                inputCheckAll.checked = true;
+            } else {
+                inputCheckAll.checked = false;
+            }
+        })
+    })
+    // end logic single input
+}
+// end checkbox multi
+
+// form change multi
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti) {
+    formChangeMulti.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const checkboxMulti = document.querySelector("[checkbox-multi]");
+        const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked") ;
+        
+        if(inputsChecked.length > 0) {
+            let ids = [];
+            const inputIds = formChangeMulti.querySelector('input[name="ids"]');
+            inputsChecked.forEach(input => {
+                // const id = input.getAttribute("value");
+                const id = input.value;
+                ids.push(id);
+
+            })
+            console.log(ids.join(", "))
+            inputIds.value = ids.join(", ")
+            formChangeMulti.submit();
+        } else {
+            alert("Vui lòng chọn ít nhất 1 bản ghi");
+        }
+    });
+}
+
+
+
+// end form change multi
