@@ -1,10 +1,12 @@
 const express = require("express");
+const methodOverride = require('method-override');
 const app = express();
-
+//change to patch methods
+app.use(methodOverride('_method'));
 require("dotenv").config();
 const route = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
-const methodOverride = require('method-override');
+
 
 const port = process.env.PORT;
 // routes
@@ -22,8 +24,8 @@ database.connect();
 
 // app local variables 
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // tu h prefixAdmin se xuat hien trog tat ca file pug
-//change to patch methods
-app.use(methodOverride('_method'));
+
+
 app.listen(port, () => {
     console.log(`App listen on port ${port}`);
 

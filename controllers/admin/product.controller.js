@@ -84,3 +84,9 @@ module.exports.changeStatus = async (req, res) => {
 // req.query là sau dấu ?
 // params là sau dấu /
 }
+
+// [PATCH] /admin/products/change-multi 
+module.exports.changeMulti = async (req, res) => {
+    console.log(req.body);
+    console.log("OKE CHANGE MULTIPLE");
+}
