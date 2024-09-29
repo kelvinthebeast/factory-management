@@ -39,6 +39,7 @@ block main
           th Image
           th Title
           th Price
+          th Position
           th Status
           th Actions
       tbody
@@ -51,6 +52,14 @@ block main
               img(src=item.thumbnail, alt=`Image of ${item.title}`, width="50", height="50")
             td #{item.title}
             td #{item.price}$
+            td 
+              input(
+                type="number"
+                value=item.position 
+                style="width: 60px"
+                min="1"
+                name="position"
+              )
             td
               if (item.status === "active")
                 a(
