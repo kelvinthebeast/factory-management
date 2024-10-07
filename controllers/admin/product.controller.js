@@ -1,4 +1,4 @@
-// [GET] /admin/products
+
 
 const { query, response } = require("express");
 const Product = require("../../models/product.model");
@@ -6,6 +6,7 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const { count } = require("moongose/models/user_model");
 const paginationHelper = require("../../helpers/pagination");
+// [GET] /admin/products
 module.exports.index = async (req, res) => {
 
     //filterStatus
@@ -50,7 +51,11 @@ module.exports.index = async (req, res) => {
     console.log(objectPagination)
 
     // const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
-    const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+    const products = await Product.find(find)
+    .sort({ position: "desc" }) // Sắp xếp theo thứ tự tăng dần
+    .limit(objectPagination.limitItems)
+    .skip(objectPagination.skip);
+
 
 
 
@@ -103,6 +108,17 @@ module.exports.changeMulti = async (req, res) => {
                     deleted: true,
                     deletedAt: new Date()
                 });
+            break;
+        case "change-position":
+            console.log(ids);
+            for (const item of ids) {
+                let [id, position] = item.split("-");
+                position = parseInt(position);
+                console.log(id);
+                console.log(position);
+                await Product.updateOne({_id: id}, {position: position});
+            }
+            // console.log(ids);
             break;
         default:
             break;

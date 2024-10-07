@@ -138,7 +138,19 @@ if(formChangeMulti) {
             inputsChecked.forEach(input => {
                 // const id = input.getAttribute("value");
                 const id = input.value;
-                ids.push(id);
+                
+                // console.log("Type Change: ", typeChange);  // Kiểm tra giá trị typeChange
+                if(typeChange == "change-position") {
+                    const position = input.closest("tr").querySelector("input[name='position']").value;
+                    // console.log(`ID: ${id}, Position: ${position}`);  // Kiểm tra id và position trước khi push
+                    ids.push(`${id}-${position}`);
+                    
+                } else {
+                    ids.push(id);  // Nếu không phải change-position, chỉ push id
+                }
+
+                
+                
 
             })
             console.log(ids.join(", "))
