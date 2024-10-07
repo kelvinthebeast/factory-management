@@ -83,8 +83,8 @@ module.exports.changeStatus = async (req, res) => {
     const status = req.params.status;
     await Product.updateOne({ _id: id }, { status: status });
 
-
-
+    req.flash("success","Cập nhật trạng thái sản phẩm thành công");
+    
     res.redirect("back"); // khong quay ve trang so 1
     // req.query là sau dấu ?
     // params là sau dấu /
@@ -98,9 +98,12 @@ module.exports.changeMulti = async (req, res) => {
     switch (type) {
         case "active":
             await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+            req.flash(`success","Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
             break;
         case "inactive":
             await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+            req.flash(`success","Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
+            
             break;
         case "delete-all":
             await Product.updateMany({ _id: { $in: ids } },

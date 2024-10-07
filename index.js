@@ -1,12 +1,22 @@
 const express = require("express");
 const methodOverride = require('method-override');
+const flash = require('express-flash')
 const app = express();
 //change to patch methods
 app.use(methodOverride('_method'));
 require("dotenv").config();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require("express-session");
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// flask
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+// end flask
 
 const route = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
