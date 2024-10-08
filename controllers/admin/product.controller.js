@@ -143,3 +143,10 @@ module.exports.deleteItem = async (req, res) => {
     res.redirect("back");
 
 }
+
+// [GET] /admin/products/create
+module.exports.create = (req, res) => {
+    res.render("admin/pages/products/create", {
+        pageTitle: "Add new product"
+    });
+} 
