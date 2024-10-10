@@ -39,10 +39,11 @@ module.exports.index = async (req, res) => {
 
 
     // pagination
-    // const countProducts = await Product.count();
-    // const countProducts = await Product.count(find);
-    const countProducts = await Product.countDocuments(find);
 
+
+
+
+    const countProducts = await Product.countDocuments(find);
 
     let objectPagination = paginationHelper({
         currentPage: 1,
