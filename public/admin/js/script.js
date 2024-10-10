@@ -169,9 +169,10 @@ if(formChangeMulti) {
 
 //show alert
 const showAlert = document.querySelector("[show-alert]");
-const closeAlert = showAlert.querySelector("[close-alert]");
+
 if (showAlert) {
-    const time = parseInt(showAlert.getAttribute("data-time"))
+    const time = parseInt(showAlert.getAttribute("data-time"));
+    const closeAlert = showAlert.querySelector("[close-alert]");
     setTimeout(() => {
         showAlert.classList.add("alert-hidden");
     }, time)
