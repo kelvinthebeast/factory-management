@@ -39,7 +39,11 @@ module.exports.index = async (req, res) => {
 
 
     // pagination
-    const countProducts = await Product.count(find);
+    // const countProducts = await Product.count();
+    // const countProducts = await Product.count(find);
+    const countProducts = await Product.countDocuments(find);
+
+
     let objectPagination = paginationHelper({
         currentPage: 1,
         limitItems: 4
@@ -161,7 +165,8 @@ module.exports.createPost = async (req, res) => {
     
     req.body.stock = parseInt(req.body.stock);
     if(req.body.position == "") {
-        const countProducts = await Product.count();
+        const countProducts = await Product.countDocuments();
+
         // console.log(countProducts); 
         req.body.position = countProducts + 1;
     } else {
