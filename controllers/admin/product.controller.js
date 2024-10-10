@@ -6,6 +6,8 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const { count } = require("moongose/models/user_model");
 const paginationHelper = require("../../helpers/pagination");
+
+const systemConfig = require("../../config/system");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -37,7 +39,12 @@ module.exports.index = async (req, res) => {
 
 
     // pagination
+
+
+
+
     const countProducts = await Product.countDocuments(find);
+
     let objectPagination = paginationHelper({
         currentPage: 1,
         limitItems: 4
@@ -142,4 +149,31 @@ module.exports.deleteItem = async (req, res) => {
 
     res.redirect("back");
 
+}
+
+// [GET] /admin/products/create
+module.exports.create = (req, res) => {
+    res.render("admin/pages/products/create", {
+        pageTitle: "Add new product"
+    });
+} 
+
+//[POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+    console.log(req.body);
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    
+    req.body.stock = parseInt(req.body.stock);
+    if(req.body.position == "") {
+        const countProducts = await Product.countDocuments();
+
+        // console.log(countProducts); 
+        req.body.position = countProducts + 1;
+    } else {
+        req.body.position = parseInt(req.body.position);
+    }
+    const product = new Product(req.body)
+    await product.save();
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
 }
