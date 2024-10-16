@@ -158,21 +158,57 @@ module.exports.create = (req, res) => {
 } 
 
 //[POST] /admin/products/create
-module.exports.createPost = async (req, res) => {
-    console.log(req.body);
-    req.body.price = parseInt(req.body.price);
-    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+// module.exports.createPost = async (req, res) => {
+//     console.log(req.body);
+//     req.body.price = parseInt(req.body.price);
+//     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     
-    req.body.stock = parseInt(req.body.stock);
-    if(req.body.position == "") {
-        const countProducts = await Product.countDocuments();
+//     req.body.stock = parseInt(req.body.stock);
+//     if(req.body.position == "") {
+//         const countProducts = await Product.countDocuments();
 
-        // console.log(countProducts); 
-        req.body.position = countProducts + 1;
-    } else {
-        req.body.position = parseInt(req.body.position);
+//         // console.log(countProducts); 
+//         req.body.position = countProducts + 1;
+//         req.body.position = parseInt(req.body.position);
+
+//     } else {
+//         req.body.position = parseInt(req.body.position);
+//     }
+//     const product = new Product(req.body)
+//     await product.save();
+//     res.redirect(`${systemConfig.prefixAdmin}/products`)
+// }
+module.exports.createPost = async (req, res) => {
+    try {
+        // Log the incoming request body for debugging
+        console.log(req.body);
+
+        // Parse numeric fields and handle potential NaN values
+        req.body.price = parseInt(req.body.price) || 0;
+        req.body.discountPercentage = parseInt(req.body.discountPercentage) || 0;
+        req.body.stock = parseInt(req.body.stock) || 0;
+
+        // Handle 'position' logic
+        if (!req.body.position || req.body.position === "") {
+            const countProducts = await Product.countDocuments(); // Count the total number of products
+            req.body.position = countProducts + 1; // Assign new position as the next available one
+        }
+
+        // Parse position to integer, if provided
+        req.body.position = parseInt(req.body.position) || 1;
+
+        // Create a new product with the request data
+        const product = new Product(req.body);
+
+        // Save the product to the database
+        await product.save();
+
+        // Redirect to the products page upon success
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    } catch (error) {
+        console.error("Error saving the product:", error);
+        
+        // Handle the error (e.g., send a response, log the error, etc.)
+        res.status(500).send("An error occurred while saving the product.");
     }
-    const product = new Product(req.body)
-    await product.save();
-    res.redirect(`${systemConfig.prefixAdmin}/products`)
-}
+};

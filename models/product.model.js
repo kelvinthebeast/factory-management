@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     slug: {
         type: String,
         slug: 'title',
-        unique: true  
+        unique: true  // chuyển về thành dạng sản phẩm 1
     },
     deleted: {
         type: Boolean,
