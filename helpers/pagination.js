@@ -4,7 +4,7 @@ module.exports = (objectPagination, query, countProducts) => {
     }
     
     objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
-    console.log(objectPagination.skip)
+    // console.log(objectPagination.skip)
 
     
     

@@ -80,7 +80,7 @@ if(checkboxMulti) {
     // console.log(inputIds);
 
     inputCheckAll.addEventListener("click", () => {
-        console.log(inputCheckAll.checked);
+        // console.log(inputCheckAll.checked);
         if(inputCheckAll.checked) {
             inputIds.forEach(input => {
                 input.checked = true;

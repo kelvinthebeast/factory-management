@@ -14,7 +14,7 @@ module.exports.index = async (req, res) => {
     //filterStatus
     const filterStatus = filterStatusHelper(req.query);
 
-    console.log(filterStatus);
+    // console.log(filterStatus);
 
 
 
@@ -30,7 +30,7 @@ module.exports.index = async (req, res) => {
 
     // optimize search by using regex
     const objectSearch = searchHelper(req.query);
-    console.log(objectSearch);
+    // console.log(objectSearch);
 
     if (objectSearch.regex) {
         find.title = objectSearch.regex;
@@ -58,7 +58,7 @@ module.exports.index = async (req, res) => {
     //end pagination
 
     // console.log(totalPage);
-    console.log(objectPagination)
+    // console.log(objectPagination)
 
     // const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
     const products = await Product.find(find)
@@ -88,7 +88,7 @@ module.exports.changeStatus = async (req, res) => {
 
 
     // res.send(`${status} - ${id}`);
-    console.log(req.params);
+    // console.log(req.params);
     const id = req.params.id;
     const status = req.params.status;
     await Product.updateOne({ _id: id }, { status: status });
@@ -103,7 +103,7 @@ module.exports.changeStatus = async (req, res) => {
 // [PATCH] /admin/products/change-multi 
 module.exports.changeMulti = async (req, res) => {
     const type = req.body.type;
-    console.log(type);
+    // console.log(type);
     const ids = req.body.ids.split(", ");
     switch (type) {
         case "active":
@@ -124,12 +124,12 @@ module.exports.changeMulti = async (req, res) => {
             req.flash("success",`Đã xóa ${ids.length} sản phẩm thành công`);
             break;
         case "change-position":
-            console.log(ids);
+            // console.log(ids);
             for (const item of ids) {
                 let [id, position] = item.split("-");
                 position = parseInt(position);
-                console.log(id);
-                console.log(position);
+                // console.log(id);
+                // console.log(position);
                 await Product.updateOne({_id: id}, {position: position});
             }
             // console.log(ids);
@@ -161,31 +161,9 @@ module.exports.create = (req, res) => {
     });
 } 
 
-//[POST] /admin/products/create
-// module.exports.createPost = async (req, res) => {
-//     console.log(req.body);
-//     req.body.price = parseInt(req.body.price);
-//     req.body.discountPercentage = parseInt(req.body.discountPercentage);
-    
-//     req.body.stock = parseInt(req.body.stock);
-//     if(req.body.position == "") {
-//         const countProducts = await Product.countDocuments();
-
-//         // console.log(countProducts); 
-//         req.body.position = countProducts + 1;
-//         req.body.position = parseInt(req.body.position);
-
-//     } else {
-//         req.body.position = parseInt(req.body.position);
-//     }
-//     const product = new Product(req.body)
-//     await product.save();
-//     res.redirect(`${systemConfig.prefixAdmin}/products`)
-// }
 module.exports.createPost = async (req, res) => {
-    try {
-        // Log the incoming request body for debugging
-        console.log(req.body);
+    
+        console.log(req.file)
 
         // Parse numeric fields and handle potential NaN values
         req.body.price = parseInt(req.body.price) || 0;
@@ -194,25 +172,24 @@ module.exports.createPost = async (req, res) => {
 
         // Handle 'position' logic
         if (!req.body.position || req.body.position === "") {
-            const countProducts = await Product.countDocuments(); // Count the total number of products
-            req.body.position = countProducts + 1; // Assign new position as the next available one
+            const countProducts = await Product.countDocuments();
+            req.body.position = countProducts + 1;
         }
 
-        // Parse position to integer, if provided
         req.body.position = parseInt(req.body.position) || 1;
 
+
+        req.body.thumbnail = `/uploads/${req.file.filename}`
         // Create a new product with the request data
         const product = new Product(req.body);
-
+        
         // Save the product to the database
         await product.save();
 
+        req.flash("success", "Thêm sản phẩm thành công");
+
         // Redirect to the products page upon success
         res.redirect(`${systemConfig.prefixAdmin}/products`);
-    } catch (error) {
-        console.error("Error saving the product:", error);
-        
-        // Handle the error (e.g., send a response, log the error, etc.)
-        res.status(500).send("An error occurred while saving the product.");
-    }
+   
 };
+
