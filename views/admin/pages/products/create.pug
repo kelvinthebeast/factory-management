@@ -33,9 +33,13 @@ block main
             label(for="discount") % Giảm giá
             input(type="number", class="form-control", id="discount", name="discountPercentage", value="", min="0")
 
-        div.form-group
+        div(class='form-group' 
+            upload-image
+            
+            )
             label(for="thumbnail") Ảnh
-            input(type="file", class="form-control-file", id="thumbnail", name="thumbnail", accept="image/*", enctype="multipart/form-data")
+            input(type="file", class="form-control-file", id="thumbnail", name="thumbnail", accept="image/*", enctype="multipart/form-data", upload-image-input)
+            img(src="", alt="", upload-image-preview, class="image-preview")
 
         div.form-group
             label(for="position") Vị trí

@@ -183,3 +183,20 @@ if (showAlert) {
     })
 }
 // end show alert
+
+
+// upload image
+            
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage) {
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePrevew = document.querySelector("[upload-image-preview]");
+
+    uploadImage.addEventListener("change", (e)=> {
+        const file = e.target.files[0]; 
+        if(file) {
+            uploadImagePrevew.src = URL.createObjectURL(file);
+        } 
+    })
+}
+// end upload images
