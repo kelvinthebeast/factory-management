@@ -162,8 +162,11 @@ module.exports.create = (req, res) => {
 } 
 
 module.exports.createPost = async (req, res) => {
-    
-        console.log(req.file)
+        if(!req.body.title){
+            req.flash("error", "Tên sản phẩm không được để trống");
+            res.redirect("back");
+            return;
+        }
 
         // Parse numeric fields and handle potential NaN values
         req.body.price = parseInt(req.body.price) || 0;
