@@ -160,13 +160,8 @@ module.exports.create = (req, res) => {
         pageTitle: "Add new product"
     });
 } 
-
+//POST /admin/products/create
 module.exports.createPost = async (req, res) => {
-        if(!req.body.title){
-            req.flash("error", "Tên sản phẩm không được để trống");
-            res.redirect("back");
-            return;
-        }
 
         // Parse numeric fields and handle potential NaN values
         req.body.price = parseInt(req.body.price) || 0;
@@ -195,4 +190,51 @@ module.exports.createPost = async (req, res) => {
         res.redirect(`${systemConfig.prefixAdmin}/products`);
    
 };
+
+
+// [GET] admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        }
+    
+        const product = await Product.findOne(find);
+        console.log(product)
+        res.render("admin/pages/products/edit", {
+            pageTitle: "Edit product",
+            product: product
+        });
+    } catch (error) {
+        req.flash("error", "Không tìm thấy sản phẩm này");
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+        
+    }
+    
+} 
+
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id;
+    req.body.price = parseInt(req.body.price) || 0;
+    req.body.discountPercentage = parseInt(req.body.discountPercentage) || 0;
+    req.body.stock = parseInt(req.body.stock) || 0;
+    req.body.position = parseInt(req.body.position) || 1;
+
+
+    req.body.thumbnail = `/uploads/${req.file.filename}`
+
+    const product = new Product(req.body);
+    
+    try {
+        await Product.updateOne({ _id: id}, req.body);
+        req.flash("success", "Cập nhật sản phẩm thành công");
+    } catch (error) {
+        req.flash("error", "Cập nhật không thành công");
+    }
+    
+
+    res.redirect(`back`);
+
+}
 

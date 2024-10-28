@@ -89,7 +89,9 @@ block main
             td
               //- button.btn.btn-primary.btn-sm.mr-2(onclick=`editProduct(${item.id})`)  Edit  
               //- button.btn.btn-danger.btn-sm(onclick=`deleteProduct(${item.id})`) Delete
-              button(class="btn btn-warning btn-sm") Edit 
+              a(
+                href=`${prefixAdmin}/products/edit/${item.id}`
+                class="btn btn-warning btn-sm") Edit 
               button(
                 class="btn btn-danger btn-sm"
                 button-delete
