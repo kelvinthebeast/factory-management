@@ -8,6 +8,7 @@ const { count } = require("moongose/models/user_model");
 const paginationHelper = require("../../helpers/pagination");
 
 const systemConfig = require("../../config/system");
+const { preProcessFile } = require("typescript");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -176,8 +177,9 @@ module.exports.createPost = async (req, res) => {
 
         req.body.position = parseInt(req.body.position) || 1;
 
+        req.body.description = req.body.description || "";
+        req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
 
-        req.body.thumbnail = `/uploads/${req.file.filename}`
         // Create a new product with the request data
         const product = new Product(req.body);
         
@@ -222,8 +224,12 @@ module.exports.editPatch = async (req, res) => {
     req.body.position = parseInt(req.body.position) || 1;
 
     req.body.description = req.body.description || "không có gì hiển thị";
-
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    } else {
+        req.body.thumbnail = "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
+    }
+    
 
     const product = new Product(req.body);
     
