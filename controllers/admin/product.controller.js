@@ -221,6 +221,7 @@ module.exports.editPatch = async (req, res) => {
     req.body.stock = parseInt(req.body.stock) || 0;
     req.body.position = parseInt(req.body.position) || 1;
 
+    req.body.description = req.body.description || "không có gì hiển thị";
 
     req.body.thumbnail = `/uploads/${req.file.filename}`
 
