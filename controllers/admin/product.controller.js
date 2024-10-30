@@ -253,7 +253,8 @@ module.exports.detail = async (req, res) => {
     try {
         const find = {
             deleted: false,
-            _id: req.params.id
+            _id: req.params.id,
+            
         }
     
         const product = await Product.findOne(find);
