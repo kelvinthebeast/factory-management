@@ -4,14 +4,14 @@ const buttonStatus = document.querySelectorAll("[button-status]");
 // console.log(buttonStatus);
 
 let url = new URL(window.location.href);
-if(buttonStatus.length > 0) {
-    
+if (buttonStatus.length > 0) {
+
     buttonStatus.forEach(button => {
-        button.addEventListener('click', ()=> {
+        button.addEventListener('click', () => {
             const status = button.getAttribute("button-status");
             // console.log(status);
 
-            if(status) {
+            if (status) {
                 url.searchParams.set("status", status);
 
             } else {
@@ -24,23 +24,23 @@ if(buttonStatus.length > 0) {
         })
     })
 
-    
+
 }
 // END BUTTON EVENT
 
 // Form search
 const formSearch = document.querySelector("#form-search");
-if(formSearch){
+if (formSearch) {
     let url = new URL(window.location.href);
     formSearch.addEventListener("submit", (e) => {
         e.preventDefault(); // ngăn không load lại trang
         // console.log(e.target.elements.keyword.value);
         const keyword = e.target.elements.keyword.value;
-        if(keyword) {
+        if (keyword) {
             url.searchParams.set("keyword", keyword);
         } else {
             url.searchParams.delete("keyword");
-            
+
 
         }
         window.location.href = url.href;
@@ -51,10 +51,10 @@ if(formSearch){
 //button pagination
 const buttonPagination = document.querySelectorAll("[button-pagination]");
 
-if(buttonPagination){
+if (buttonPagination) {
     buttonPagination.forEach(button => {
         let url = new URL(window.location.href);
-        button.addEventListener("click", ()=> {
+        button.addEventListener("click", () => {
             page = button.getAttribute("button-pagination");
             // console.log(page);
 
@@ -72,7 +72,7 @@ if(buttonPagination){
 // checkbox multi
 
 const checkboxMulti = document.querySelector("[checkbox-multi]");
-if(checkboxMulti) {
+if (checkboxMulti) {
     const inputCheckAll = checkboxMulti.querySelector("input[name='checkall']");
     const inputIds = checkboxMulti.querySelectorAll("input[name='id']");
 
@@ -81,7 +81,7 @@ if(checkboxMulti) {
 
     inputCheckAll.addEventListener("click", () => {
         // console.log(inputCheckAll.checked);
-        if(inputCheckAll.checked) {
+        if (inputCheckAll.checked) {
             inputIds.forEach(input => {
                 input.checked = true;
             });
@@ -89,19 +89,19 @@ if(checkboxMulti) {
             inputIds.forEach(input => {
                 input.checked = false;
             })
-            
+
         }
-        
+
     })
 
 
     // logic single input
     inputIds.forEach(input => {
-        input.addEventListener("click", ()=> {
+        input.addEventListener("click", () => {
             let countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
             // console.log(countChecked);
             // console.log(inputIds.length);
-            if(countChecked == inputIds.length) {
+            if (countChecked == inputIds.length) {
                 inputCheckAll.checked = true;
             } else {
                 inputCheckAll.checked = false;
@@ -114,12 +114,12 @@ if(checkboxMulti) {
 
 // form change multi
 const formChangeMulti = document.querySelector("[form-change-multi]");
-if(formChangeMulti) {
+if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (event) => {
         event.preventDefault();
         const checkboxMulti = document.querySelector("[checkbox-multi]");
-        const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked") ;
-        
+        const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
+
         const typeChange = event.target.elements.type.value;
 
         // console.log(typeChange);
@@ -132,25 +132,25 @@ if(formChangeMulti) {
 
 
 
-        if(inputsChecked.length > 0) {
+        if (inputsChecked.length > 0) {
             let ids = [];
             const inputIds = formChangeMulti.querySelector('input[name="ids"]');
             inputsChecked.forEach(input => {
                 // const id = input.getAttribute("value");
                 const id = input.value;
-                
+
                 // console.log("Type Change: ", typeChange);  // Kiểm tra giá trị typeChange
-                if(typeChange == "change-position") {
+                if (typeChange == "change-position") {
                     const position = input.closest("tr").querySelector("input[name='position']").value;
                     // console.log(`ID: ${id}, Position: ${position}`);  // Kiểm tra id và position trước khi push
                     ids.push(`${id}-${position}`);
-                    
+
                 } else {
                     ids.push(id);  // Nếu không phải change-position, chỉ push id
                 }
 
-                
-                
+
+
 
             })
             console.log(ids.join(", "))
@@ -178,7 +178,7 @@ if (showAlert) {
     setTimeout(() => {
         showAlert.classList.add("alert-hidden");
     }, time)
-    closeAlert.addEventListener("click", ()=> {
+    closeAlert.addEventListener("click", () => {
         showAlert.classList.add("alert-hidden");
     })
 }
@@ -186,17 +186,61 @@ if (showAlert) {
 
 
 // upload image
-            
+
 const uploadImage = document.querySelector("[upload-image]");
-if(uploadImage) {
+if (uploadImage) {
     const uploadImageInput = document.querySelector("[upload-image-input]");
     const uploadImagePrevew = document.querySelector("[upload-image-preview]");
 
-    uploadImage.addEventListener("change", (e)=> {
-        const file = e.target.files[0]; 
-        if(file) {
+    uploadImage.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
             uploadImagePrevew.src = URL.createObjectURL(file);
-        } 
+        }
     })
 }
 // end upload images
+
+
+// sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+
+    let url = new URL(window.location.href);
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+    // sắp xếp
+    sortSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        // console.log(value.split("-"));
+
+        const [sortKey, sortValue] = value.split("-");
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+
+        window.location.href = url.href;
+    })
+    // xóa sắp xếp
+    sortClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+    })
+    // thêm selected cho option
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    console.log(sortKey);
+    console.log(sortValue);
+    if (sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`;
+        console.log(stringSort);
+
+        const optionSelected = sortSelect.querySelector(`option[value=${stringSort}]`);
+        
+        console.log(optionSelected);
+        if (optionSelected) {
+            optionSelected.setAttribute("selected", "selected"); // Set the 'selected' attribute
+        }
+    }
+}
+// end sort
