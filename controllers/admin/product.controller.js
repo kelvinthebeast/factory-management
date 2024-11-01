@@ -224,11 +224,11 @@ module.exports.editPatch = async (req, res) => {
 
     req.body.description = req.body.description || "không có gì hiển thị";
 
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    } else {
-        req.body.thumbnail = "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
-    }
+    // if (req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // } else {
+    //     req.body.thumbnail = "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
+    // }
 
 
     const product = new Product(req.body);
