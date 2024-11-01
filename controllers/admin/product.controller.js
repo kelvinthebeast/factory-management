@@ -178,8 +178,8 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position) || 1;
 
         req.body.description = req.body.description || "";
-        req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
-
+        // req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
+        
         // Create a new product with the request data
         const product = new Product(req.body);
         

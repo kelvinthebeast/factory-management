@@ -1,6 +1,8 @@
 const express = require("express");
 const methodOverride = require('method-override');
-const flash = require('express-flash')
+const flash = require('express-flash');
+
+
 
 const app = express();
 //change to patch methods
