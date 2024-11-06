@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const methodOverride = require('method-override');
 const flash = require('express-flash');
 
@@ -20,6 +21,10 @@ app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 // end flask
+
+//TINY MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+//END TINYMCE
 
 const route = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
