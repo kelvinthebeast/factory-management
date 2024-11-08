@@ -170,7 +170,7 @@ module.exports.create = (req, res) => {
         pageTitle: "Add new product"
     });
 }
-//POST /admin/products/create//POST /admin/products/create
+//POST /admin/products/create/
 module.exports.createPost = async (req, res) => {
 
     // Parse numeric fields and handle potential NaN values
