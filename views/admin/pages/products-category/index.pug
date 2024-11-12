@@ -1,71 +1,25 @@
 extends ../../layouts/default.pug
+include ../../mixins/table-tree.pug
 
 block main
-    h1 Danh mục sản phẩm
-    .card.mb-3
-        .card-header Danh sách
-        .card-body
-            .row
-                .col-8
-                .col-4
-                    a(href=`${prefixAdmin}/products-category/create` class="btn btn-outline-success") + Thêm mới
-            table.table.table-striped.table-bordered(checkbox-multi)
-                thead.table-dark
-                    tr
-                        th 
-                            input(type="checkbox", name="checkall")
-                        th STT 
-                        th Image
-                        th Title
-                        th Position
-                        th Status
-                        th Actions
-                tbody
-                    each item, index in records
-                        tr
-                            td
-                                input(type="checkbox", name="id", value=item.id)
-                            td #{index + 1}
-                            td
-                                img(src=item.thumbnail, alt=`Image of ${item.title}`, width="50", height="50")
-                            td #{item.title}
-                            td
-                                input(
-                                    type="number"
-                                    value=item.position
-                                    style="width: 60px"
-                                    min="1"
-                                    name="position"
-                                )
-                            td
-                                if item.status === "active"
-                                    a(
-                                        href="javascript:;"
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="btn btn-sm ml-1 btn-outline-success"
-                                    ) Hoạt động
-                                else
-                                    a(
-                                        href="javascript:;"
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="btn btn-sm ml-1 btn-outline-danger"
-                                    ) Dừng hoạt động
-                            td
-                                a(
-                                    href=`${prefixAdmin}/products-category/detail/${item.id}`
-                                    class="btn btn-secondary btn-sm"
-                                ) Detail
-                                a(
-                                    href=`${prefixAdmin}/products-category/edit/${item.id}`
-                                    class="btn btn-warning btn-sm"
-                                ) Edit 
-                                button(
-                                    class="btn btn-danger btn-sm"
-                                    button-delete
-                                    data-id=item.id
-                                ) Delete
-            
+  h1 Danh mục sản phẩm
+  .card.mb-3
+    .card-header Danh sách
+    .card-body
+      .row
+        .col-8
+        .col-4
+          a(href=`${prefixAdmin}/products-category/create` class="btn btn-outline-success") + Thêm mới
+      table.table.table-striped.table-bordered(checkbox-multi)
+        thead.table-dark
+          tr
+            th 
+              input(type="checkbox", name="checkall")
+            th STT 
+            th Image
+            th Title
+            th Position
+            th Status
+            th Actions
+        tbody
+          +table-tree(records)
