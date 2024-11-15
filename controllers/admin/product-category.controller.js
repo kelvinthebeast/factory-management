@@ -7,19 +7,19 @@ const createTreeHelper = require("../../helpers/createTree")
 // [GET] admin/products-catogory
 module.exports.index = async (req, res) => {
 
-   
+
     let find = {
         deleted: false
     }
-    
-    
+
+
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelper.tree(records);
     res.render("admin/pages/products-category/index", {
 
         pageTitle: "Danh mục sản phẩm",
         records: newRecords
-        
+
     })
     // res.send("PRODUCT MANGEMENT")
 };
@@ -43,7 +43,7 @@ module.exports.create = async (req, res) => {
     //     }); // <- Closing bracket added here for forEach
     //     return tree; // Optional: Add a return for the tree structure if needed
     // }
-    
+
 
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelper.tree(records);
@@ -52,7 +52,8 @@ module.exports.create = async (req, res) => {
         pageTitle: "Tạo danh mục sản phẩm",
         records: newRecords
     }
-)}
+    )
+}
 
 
 
@@ -96,3 +97,46 @@ module.exports.createPost = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+
+// [GET] admin/products-catogory/edit
+module.exports.edit = async (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const data = await ProductCategory.findOne({ _id: id, deleted: false });
+
+
+
+        const records = await ProductCategory.find({ deleted: false });
+
+
+        const newRecords = createTreeHelper.tree(records);
+        res.render("admin/pages/products-category/edit", {
+            pageTitle: "Tạo danh mục sản phẩm",
+            data: data,
+            records: newRecords
+
+        }
+        )
+
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products-catogory`)
+    }
+}
+
+
+
+
+module.exports.editPath = async (req, res) => {
+
+    const id = req.params.id;
+
+    req.body.position = parseInt(req.body.position);
+    console.log(id);
+    console.log(req.body);
+    await ProductCategory.updateOne({ _id: id }, req.body);
+    res.redirect("back");
+
+
+}
