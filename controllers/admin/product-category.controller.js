@@ -2,7 +2,9 @@ const ProductCategory = require("../../models/product-category.model");
 const systemConfig = require("../../config/system");
 
 
-const createTreeHelper = require("../../helpers/createTree")
+
+
+const createTreeHelper = require("../../helpers/createTree");
 
 // [GET] admin/products-catogory
 module.exports.index = async (req, res) => {

@@ -9,6 +9,9 @@ const paginationHelper = require("../../helpers/pagination");
 
 const systemConfig = require("../../config/system");
 const { preProcessFile } = require("typescript");
+const ProductCategory = require("../../models/product-category.model");
+const createTreeHelper = require("../../helpers/createTree");
+
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -165,9 +168,19 @@ module.exports.deleteItem = async (req, res) => {
 }
 
 // [GET] /admin/products/create
-module.exports.create = (req, res) => {
+module.exports.create = async (req, res) => {
+
+    let find = {
+        deleted: false
+    }
+    
+    const category = await ProductCategory.find(find);
+    const newCategory = createTreeHelper.tree(category);
     res.render("admin/pages/products/create", {
-        pageTitle: "Add new product"
+        pageTitle: "Add new product",
+        category: newCategory
+       
+        
     });
 }
 //POST /admin/products/create/
@@ -211,10 +224,14 @@ module.exports.edit = async (req, res) => {
         }
 
         const product = await Product.findOne(find);
+
+        const category = await ProductCategory.find({deleted: false});
+        const newCategory = createTreeHelper.tree(category);
         console.log(product)
         res.render("admin/pages/products/edit", {
             pageTitle: "Edit product",
-            product: product
+            product: product,
+            category: newCategory
         });
     } catch (error) {
         req.flash("error", "Không tìm thấy sản phẩm này");
@@ -224,6 +241,8 @@ module.exports.edit = async (req, res) => {
 
 }
 
+
+// [Patch] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
     const id = req.params.id;
     req.body.price = parseInt(req.body.price) || 0;

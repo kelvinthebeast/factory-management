@@ -22,11 +22,17 @@ block main
                 required
             )
         div(class="form-group")
-        label(for="parent_id") Danh mục
-        select(name="parent_id" id="parent_id" class="form-control")
-            option(value="") --Chọn Danh mục cha--
+        label(for="product_category") Danh mục
+        select(
+            name="parent_id"
+            id="parent_id"
+            class="form-control"
+        )
+            option(value="") -- Chọn danh mục --
             if (records)
                 +select-tree(records)
+
+
 
         div(class="form-group")
             label(for="desc") Mô tả
