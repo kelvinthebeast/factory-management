@@ -1,7 +1,9 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/alert.pug
 block main
+    +alert-success(5000)
     h1(class="mb-4") Phân quyền
+    div(data-records= records)
     if(records)
         div(class="text-right")
             button(
@@ -10,7 +12,7 @@ block main
                 button-submit
             ) Cập nhật
 
-        table(class="table table-hover table-sm")
+        table(class="table table-hover table-sm" table-permissions)
             thead
                 tr
                     th Tính năng
@@ -20,8 +22,10 @@ block main
                 tr(data-name="id")
                   td
                   each item in records
-                    td(class="text-center") 
+                    td(class="text-center d-none") 
                      input(type="text" value=item.id) 
+
+                //- DANH MỤC SẢN PHẨM 
                 tr
                     td(colspan="4")
                         b Danh mục sản phẩm
@@ -48,4 +52,42 @@ block main
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
+                            
+                //- DANH Sách sản phẩm
+                tr
+                    td(colspan="4")
+                        b Danh sách sản phẩm
+                tr(data-name="products-category_view")
+                    td Xem
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
                     
+                tr(data-name="products-category_create")
+                    td Thêm mới
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                    
+                tr(data-name="products-category_edit")
+                    td Chỉnh sửa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                    
+                tr(data-name="products-category_delete")
+                    td Xóa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+
+
+    form( 
+        id="form-change-permissions" 
+        method="POST" 
+        class="d-none"
+        action=`${prefixAdmin}/roles/permissions?_method=PATCH`) 
+        div.form-group 
+            input.form-control( type="text" name="permissions" )                        
+                    
+    script(src="/admin/js/roles.js", type="")
