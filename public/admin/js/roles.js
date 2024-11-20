@@ -86,4 +86,17 @@ if (dataRecords) {
     });
 }
 
+// const dataRecords = document.querySelector("[data-records]");
+// if(dataRecords) {
+//     const records = JSON.parse(dataRecords.getAttribute("data-records"));
+//     const tablePermissions = document.querySelector("[table-permissions]");
+//     console.log(tablePermissions);
+//     console.log(records);
+//     records.forEach(record => {
+//         console.log(record.permissions)
+//     })
+    
+// }
+
+
 // end permissions defaults

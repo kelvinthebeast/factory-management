@@ -3,8 +3,9 @@ include ../../mixins/alert.pug
 block main
     +alert-success(5000)
     h1(class="mb-4") Phân quyền
-    div(data-records= records)
+    
     if(records)
+        div(data-records= records)
         div(class="text-right")
             button(
                 type="submit"
@@ -29,13 +30,13 @@ block main
                 tr
                     td(colspan="4")
                         b Danh mục sản phẩm
-                tr(data-name="products-category_view")
+                tr(data-name="roles-category_view")
                     td Xem
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
                     
-                tr(data-name="products-category_create")
+                tr(data-name="roles-category_create")
                     td Thêm mới
                     each item in records
                         td(class="text-center")
@@ -57,26 +58,59 @@ block main
                 tr
                     td(colspan="4")
                         b Danh sách sản phẩm
-                tr(data-name="products-category_view")
+                tr(data-name="products_view")
                     td Xem
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
                     
-                tr(data-name="products-category_create")
+                tr(data-name="products_create")
                     td Thêm mới
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
                     
-                tr(data-name="products-category_edit")
+                tr(data-name="products_edit")
                     td Chỉnh sửa
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
                     
-                tr(data-name="products-category_delete")
+                tr(data-name="products_delete")
                     td Xóa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+
+                //- nhóm quyền 
+                tr
+                    td(colspan="4")
+                        b Phân quyền
+                tr(data-name="roles_view")
+                    td Xem
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                    
+                tr(data-name="roles_create")
+                    td Thêm mới
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                    
+                tr(data-name="roles_edit")
+                    td Chỉnh sửa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                    
+                tr(data-name="roles_delete")
+                    td Xóa
+                    each item in records
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name="roles_permissions")
+                    td Nhóm quyền
                     each item in records
                         td(class="text-center")
                             input(type="checkbox")
