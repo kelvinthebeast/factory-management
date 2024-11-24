@@ -6,6 +6,9 @@ const flash = require('express-flash');
 
 
 const app = express();
+// config for account
+
+//end account config
 //change to patch methods
 app.use(methodOverride('_method'));
 require("dotenv").config();
