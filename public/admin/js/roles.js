@@ -11,7 +11,7 @@ if (tablePermissions) {
         rows.forEach(row => {
             const name = row.getAttribute("data-name");
             const inputs = row.querySelectorAll("input"); // Define inputs here
-
+            //case 1
             if (name == "id") {
                 inputs.forEach(input => {
                     const id = input.value;
@@ -20,6 +20,7 @@ if (tablePermissions) {
                         permissions: []
                     });
                 });
+                //others
             } else {
                 inputs.forEach((input, index) => {
                     const checked = input.checked;
