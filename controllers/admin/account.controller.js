@@ -60,3 +60,50 @@ module.exports.createPost = async (req, res) => {
     }
 
 }
+
+// [GET] admin/accounts/edit/:id
+module.exports.edit = async (req, res) => {
+
+    let find = {
+        _id: req.params.id,
+        deleted: false
+    }
+    try {
+        const data = await Account.findOne(find)
+        const roles = await Role.find({ deleted: false });
+        res.render("admin/pages/accounts/edit", {
+
+            pageTitle: "Danh mục quyền",
+            roles: roles,
+            data: data
+        });
+    } catch (error) {
+
+    }
+
+
+}
+
+// [PATCH] admin/accounts/edit/:id 
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id;                        // tìm tất cả trừ id này
+    const emailExists = await Account.findOne({_id: {$ne: id}, email: req.body.email, deleted: false});
+    // check email
+    if (emailExists) {
+        req.flash('error', `Email ${req.body.email} đã tồn tại`);
+        req.flash("error","Please enter a valid email");
+    }
+    else {
+        if (req.body.password) {
+            req.body.password = md5(req.body.password);
+        } else {
+            delete req.body.password;
+        } // if have password return else del password
+        await Account.updateOne({ _id: id }, req.body)
+
+        req.flash("success", "Password updated successfully");
+    }
+
+
+    res.redirect("back");
+}
