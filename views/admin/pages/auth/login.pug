@@ -1,0 +1,21 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-success(5000)
+    +alert-error(5000)
+    .container.mt-5
+        .row.justify-content-center
+            .col-md-6
+                .card
+                    .card-header.text-center.bg-primary.text-white
+                        h4 Đăng nhập
+                    .card-body
+                        form(action=`${prefixAdmin}/auth/login` method="POST")
+                            .form-group
+                                label(for="email") Email
+                                input#username.form-control(type="text" name="email" placeholder="Typing your email...." required)
+                            .form-group
+                                label(for="password") Mật khẩu
+                                input#password.form-control(type="password" name="password" placeholder="Typing your password....." required)
+                            button.btn.btn-primary.btn-block(type="submit") Sign In
