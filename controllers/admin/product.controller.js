@@ -12,6 +12,8 @@ const { preProcessFile } = require("typescript");
 const ProductCategory = require("../../models/product-category.model");
 const createTreeHelper = require("../../helpers/createTree");
 
+
+const Account = require("../../models/account.model");
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
 
@@ -78,6 +80,15 @@ module.exports.index = async (req, res) => {
         .sort(sort) // Sắp xếp theo thứ tự tăng dần
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip);
+
+    for (const product of products) {
+        const user = await Account.findOne({
+            _id: product.createdBy.account_id
+        })
+        if (user) {
+            product.accountFullName = user.fullName;
+        }
+    }
 
 
 
@@ -198,12 +209,16 @@ module.exports.createPost = async (req, res) => {
     }
 
     req.body.position = parseInt(req.body.position) || 1;
-
+    req.body.createdBy ={
+        account_id: res.locals.user.id
+    }
     req.body.description = req.body.description || "";
     // req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : "https://th.bing.com/th/id/OIP.hRxc0XsD9dXEaXxmvEOwXgHaLH?rs=1&pid=ImgDetMain";
 
     // Create a new product with the request data
     const product = new Product(req.body);
+
+
 
     // Save the product to the database
     await product.save();

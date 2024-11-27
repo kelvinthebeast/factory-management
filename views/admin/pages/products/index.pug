@@ -5,6 +5,8 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
 block main
   if(role.permissions.includes("products_view"))
     +alert-success(5000)
@@ -66,7 +68,9 @@ block main
             th Price
             th Position
             th Status
+            th Created By
             th Actions
+            
         tbody
           each item, index in products
             tr
@@ -99,9 +103,15 @@ block main
                     data-id=item.id
                     button-change-status 
                     class="btn btn-sm ml-1 btn-outline-success") Dừng hoạt động
+              
               td
+                
+                p #{item.accountFullName}
+                p 
+                  +formatDateTime(item.createdBy.createdAt)
                 //- button.btn.btn-primary.btn-sm.mr-2(onclick=`editProduct(${item.id})`)  Edit  
                 //- button.btn.btn-danger.btn-sm(onclick=`deleteProduct(${item.id})`) Delete
+              td
                 a(
                   href=`${prefixAdmin}/products/detail/${item.id}`
                   class="btn btn-secondary btn-sm") Detail

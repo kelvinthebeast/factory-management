@@ -3,6 +3,9 @@ const path = require('path');
 const methodOverride = require('method-override');
 const flash = require('express-flash');
 
+const moment = require('moment');
+
+
 
 
 const app = express();
@@ -49,7 +52,7 @@ database.connect();
 
 // app local variables 
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // tu h prefixAdmin se xuat hien trog tat ca file pug
-
+app.locals.moment = moment;
 
 app.listen(port, () => {
     console.log(`App listen on port ${port}`);

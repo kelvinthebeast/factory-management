@@ -13,6 +13,13 @@ const productSchema = new mongoose.Schema({
     discountPercentage: Number,
     discountedTotal: Number,
     thumbnail: String,
+    createdBy: {
+        account_id: String,
+        createAt: {
+            type: Date,
+            default: Date.now()
+        }
+    },
     slug: {
         type: String,
         slug: 'title',
@@ -22,7 +29,11 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    deletedAt: Date 
+    // deletedAt: Date 
+    deletedBy: {
+        account_id: String,
+        deleteAt:Date
+    }
 }, {
     timestamps: true  // Thêm timestamps cho thoi gian tạo và cập nhật sản phẩm
 })
