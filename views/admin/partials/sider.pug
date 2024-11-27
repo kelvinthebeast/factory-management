@@ -1,20 +1,20 @@
-.sider 
-    .inner-menu 
-        ul
-            li
-                a(href="/admin/dashboard") dashboard  
-        ul
-            li
-                a(href="/admin/products-category") category           
-        ul
-            li
-                a(href="/admin/products") products
-        ul
-            li
-                a(href="/admin/roles") Roles
-        ul
-            li
-                a(href="/admin/roles/permissions") Permissions
-        ul
-            li
-                a(href="/admin/accounts") Accounts list
+.sider
+  .inner-menu
+    ul
+      li
+        a(href= `${prefixAdmin}/dashboard`) Tổng quan
+      if(role.permissions.includes("products-category_view"))
+        li
+          a(href= `${prefixAdmin}/products-category`) Danh mục sản phẩm
+      if(role.permissions.includes("products_view"))
+        li
+          a(href= `${prefixAdmin}/products`) Danh sách sản phẩm
+      if(role.permissions.includes("roles_view"))
+        li
+          a(href= `${prefixAdmin}/roles`) Nhóm quyền
+      if(role.permissions.includes("roles_permissions"))
+        li
+          a(href= `${prefixAdmin}/roles/permissions`) Phân quyền
+      if(role.permissions.includes("accounts_view"))
+        li
+          a(href= `${prefixAdmin}/accounts`) Danh sách tài khoản
