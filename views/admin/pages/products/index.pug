@@ -69,6 +69,7 @@ block main
             th Position
             th Status
             th Created By
+            th Updated By
             th Actions
             
         tbody
@@ -111,6 +112,12 @@ block main
                   +formatDateTime(item.createdBy.createdAt)
                 //- button.btn.btn-primary.btn-sm.mr-2(onclick=`editProduct(${item.id})`)  Edit  
                 //- button.btn.btn-danger.btn-sm(onclick=`deleteProduct(${item.id})`) Delete
+              td
+                - const updatedBy = item.updatedBy.slice(-1)[0];
+                if (updatedBy)
+                  p #{updatedBy.accountFullName}
+                  p 
+                    +formatDateTime(updatedBy.updatedAt)
               td
                 a(
                   href=`${prefixAdmin}/products/detail/${item.id}`
