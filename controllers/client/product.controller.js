@@ -1,6 +1,6 @@
 const Product = require("../../models/product.model");
 const productsHelper = require("../../helpers/products");
-
+const ProductCategoryHelper = require("../../helpers/products-category");
 const ProductCategory = require("../../models/product-category.model");
 // GET /products
 module.exports.index = async (req, res)=> {
@@ -46,11 +46,20 @@ module.exports.category = async (req, res)=> {
     console.log(req.params.slugCategory);
     const category = await ProductCategory.findOne({ slug: req.params.slugCategory, deleted: false});
 
+    
+    
+
+
+    
+    const listSubCategory = await ProductCategoryHelper.getSubCategory(category.id);
+    
+    const listSubCategoryId = listSubCategory.map(item => item.id);
+    
     const products = await ProductCategory.find({
-        product_category_id: category.id,
+        product_category_id: {$in:[category.id,...listSubCategory]},
         deleted: false
     }).sort({position: "desc"});
-    // res.send("OKE")
+
     const newProducts = productsHelper.priceNewProducts(products);
     res.render("client/pages/products/index", {
         pageTitle: category.title,
