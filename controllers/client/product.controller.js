@@ -1,6 +1,6 @@
 const Product = require("../../models/product.model");
 const productsHelper = require("../../helpers/products");
-const ProductCategoryHelper = require("../../helpers/products-category");
+const productCategoryHelper = require("../../helpers/products-category");
 const ProductCategory = require("../../models/product-category.model");
 // GET /products
 module.exports.index = async (req, res)=> {
@@ -51,12 +51,12 @@ module.exports.category = async (req, res)=> {
 
 
     
-    const listSubCategory = await ProductCategoryHelper.getSubCategory(category.id);
+    const listSubCategory = await productCategoryHelper.getSubCategory(category.id);
     
     const listSubCategoryId = listSubCategory.map(item => item.id);
     
-    const products = await ProductCategory.find({
-        product_category_id: {$in:[category.id,...listSubCategory]},
+    const products = await Product.find({
+        product_category_id: {$in:[category.id,...listSubCategoryId]},
         deleted: false
     }).sort({position: "desc"});
 
