@@ -447,3 +447,152 @@ header .inner-menu .sub-menu-content a:hover {
 
 
 /* end submenu */
+
+/* Detail pages */
+/* General Reset */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 15px;
+}
+
+/* Product Detail Section */
+.product-detail {
+  padding: 2rem 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inner-thumb img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inner-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.inner-category {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.inner-category a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.inner-category a:hover {
+  text-decoration: underline;
+}
+
+.inner-price-new {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 0.5rem;
+}
+
+.inner-price-old {
+  font-size: 1.2rem;
+  color: #dc3545;
+  text-decoration: line-through;
+  margin-bottom: 0.5rem;
+}
+
+.inner-percent {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffc107;
+  margin-bottom: 0.5rem;
+}
+
+.inner-stock {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.inner-stock span {
+  font-weight: bold;
+  color: #222;
+}
+
+/* Form Styles */
+form {
+  margin-top: 1rem;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Description Section */
+.box-head {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.inner-desc {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .col-6 {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .inner-title {
+    font-size: 1.5rem;
+  }
+
+  .inner-price-new {
+    font-size: 1.2rem;
+  }
+}
+
+/* End detail pages */
