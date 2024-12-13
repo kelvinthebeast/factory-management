@@ -596,3 +596,101 @@ button:hover {
 }
 
 /* End detail pages */
+/* SHow alert */
+
+/* General Alert Styles */
+.message.info {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 300px;
+  animation: slideIn 0.5s ease-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Success Alert */
+.alert-success {
+  background: linear-gradient(45deg, #28a745, #45d17a);
+  border: 1px solid #218838;
+}
+
+/* Error Alert */
+.alert-danger {
+  background: linear-gradient(45deg, #dc3545, #f15e63);
+  border: 1px solid #c82333;
+}
+
+/* Close Button */
+.alert span[close-alert] {
+  margin-left: 15px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.alert span[close-alert]:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Hide Alert After Time */
+[show-alert] {
+  animation: fadeOut var(--alert-time, 5s) ease forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .message.info {
+    top: 10px;
+    right: 10px;
+    max-width: 90%;
+  }
+
+  .alert {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .alert span[close-alert] {
+    padding: 5px;
+  }
+}
+
+/* end show alert */
