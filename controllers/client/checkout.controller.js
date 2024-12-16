@@ -68,7 +68,7 @@ module.exports.index = async (req, res) => {
 //     }
 //     res.redirect(`/checkout/success/${order.id}`);
 // }
-
+// [post] /checkout/order/
 module.exports.order = async (req, res) => {
     try {
         const cartId = req.cookies.cartId; // Lấy cartId từ cookies
@@ -120,11 +120,28 @@ module.exports.order = async (req, res) => {
     }
 };
 
-
+// [get] /checkout/success/:orderId
 module.exports.success = async (req, res) => {
 
-    console.log(req.params.orderId);
+    const order = await Order.findOne({_id: req.params.orderId});
+
+    for (const product of order.products) {
+        const productInfo = await Product.findOne({
+            _id: product.product_id
+        }).select("title thumbnail");
+
+        product.productInfo = productInfo
+        product.priceNew = productsHelper.priceNewProduct(product);
+        console.log("PRoduc Pricenwe " + product.priceNew);
+        product.totalPrice = product.priceNew * product.quantity
+
+        console.log("product total price" + product.totalPrice);
+    }
+
+    console.log(order);
+    order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);
     res.render("client/pages/checkout/success",{
-        pageTitle: "Trang đặt hàng thành công"
+        pageTitle: "Trang đặt hàng thành công",
+        order: order
     } )
 };
