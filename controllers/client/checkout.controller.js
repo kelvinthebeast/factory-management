@@ -2,7 +2,7 @@ const Product = require("../../models/product.model");
 const Cart = require("../../models/cart.model");
 const productsHelper = require("../../helpers/products");
 const Order = require("../../models/order.model");
-
+// [get]/checkout
 module.exports.index = async (req, res) => {
     const cartId = req.cookies.cartId;
     const cart = await Cart.findOne({_id: cartId});
@@ -11,9 +11,15 @@ module.exports.index = async (req, res) => {
 
         for (const item of cart.products) {
             const productId = item.product_id;
-            const productInfo = await Product.findOne({_id: productId}).select("title thumbnail slug price discountPercentage");
-            
+            const productInfo = await Product.findOne({
+                _id: item.product_id
+            }).select("title thumbnail price discountPercentage");
 
+            if (!productInfo) {
+                console.error(`Không tìm thấy sản phẩm với ID ${item.product_id}`);
+                continue; // Bỏ qua item này
+            }
+            
             productInfo.priceNew = productsHelper.priceNewProduct(productInfo);
 
             item.productInfo = productInfo;
@@ -29,97 +35,6 @@ module.exports.index = async (req, res) => {
     });
 }};
 
-// module.exports.order = async (req, res) => {
-//    const cartId = req.cookies.cartId;
-//     const userInfo = req.body;
-
-//     const cart = await Cart.findOne({
-//         _id: cartId
-//     })
-
-//     const products = [];
-
-//     for (const product of cart.products) {
-//         const objectProduct = {
-//             product_id: product.product_id,
-//             price: 0,
-//             discountPercentage: 0,
-//              quantity: product.quantity
-
-//         };
-//         const productInfo = await Product.findOne({_id: product.product_id}).select("price discountPercentage");
-//         objectProduct.price = productInfo.price;
-//         objectProduct.discountPercentage = productInfo.discountPercentage;
-//         products.push(objectProduct);
-
-//         const orderInfo = {
-//             cart_id: cartId,
-//             userInfo: userInfo, 
-//             products: products
-//         }
-
-//         const order = new Order(orderInfo);
-//         await order.save();
-
-
-//         await Product.updateOne({
-//             _id: carId
-//         },{products: []})
-//     }
-//     res.redirect(`/checkout/success/${order.id}`);
-// }
-// [post] /checkout/order/
-module.exports.order = async (req, res) => {
-    try {
-        const cartId = req.cookies.cartId; // Lấy cartId từ cookies
-        const userInfo = req.body; // Lấy thông tin user từ body request
-
-        // Tìm cart theo cartId
-        const cart = await Cart.findOne({ _id: cartId });
-        if (!cart) {
-            return res.status(404).send("Cart not found");
-        }
-
-        const products = []; // Mảng để lưu danh sách sản phẩm
-
-        // Lấy thông tin từng sản phẩm trong giỏ hàng
-        for (const product of cart.products) {
-            const productInfo = await Product.findOne({ _id: product.product_id }).select("price discountPercentage");
-            if (!productInfo) {
-                return res.status(404).send(`Product with ID ${product.product_id} not found`);
-            }
-
-            // Thêm thông tin sản phẩm vào mảng products
-            products.push({
-                product_id: product.product_id,
-                price: productInfo.price,
-                discountPercentage: productInfo.discountPercentage,
-                quantity: product.quantity
-            });
-        }
-
-        // Tạo thông tin order
-        const orderInfo = {
-            cart_id: cartId,
-            userInfo: userInfo,
-            products: products
-        };
-
-        // Lưu order vào cơ sở dữ liệu
-        const order = new Order(orderInfo);
-        await order.save();
-
-        // Xóa sản phẩm trong cart sau khi đặt hàng thành công
-        await Cart.updateOne({ _id: cartId }, { products: [] });
-
-        // Chuyển hướng đến trang checkout thành công
-        res.redirect(`/checkout/success/${order.id}`);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("An error occurred while processing the order");
-    }
-};
-
 // [get] /checkout/success/:orderId
 module.exports.success = async (req, res) => {
 
@@ -128,20 +43,70 @@ module.exports.success = async (req, res) => {
     for (const product of order.products) {
         const productInfo = await Product.findOne({
             _id: product.product_id
-        }).select("title thumbnail");
+        }).select("title thumbnail price discountPercentage");
 
+        if (!productInfo) {
+            console.error(`Không tìm thấy sản phẩm với ID ${product.product_id}`);
+            continue; // Bỏ qua sản phẩm này
+        }
         product.productInfo = productInfo
         product.priceNew = productsHelper.priceNewProduct(product);
-        console.log("PRoduc Pricenwe " + product.priceNew);
+        
         product.totalPrice = product.priceNew * product.quantity
 
         console.log("product total price" + product.totalPrice);
     }
 
-    console.log(order);
+
     order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);
     res.render("client/pages/checkout/success",{
         pageTitle: "Trang đặt hàng thành công",
         order: order
     } )
 };
+
+// [post] /checkout/order/
+module.exports.order = async (req, res) => {
+    const cartId = req.cookies.cartId;
+    const userInfo = req.body;
+
+    const cart = await Cart.findOne({
+        _id: cartId
+    })
+
+    const products = [];
+
+    for (const product of cart.products) {
+        const objectProduct = {
+            product_id: product.product_id,
+            price: 0,
+            discountPercentage: 0,
+             quantity: product.quantity
+        
+    }
+    const productInfo = await Product.findOne({_id: product.product_id}).select("price discountPercentage");
+
+        objectProduct.price = productInfo.price
+        objectProduct.discountPercentage = productInfo.discountPercentage
+
+        products.push(objectProduct);
+
+}
+   
+
+    
+    const orderInfo = {
+        cart_id: cartId,
+        userInfo: userInfo, 
+        products: products
+    }
+
+    const order = new Order(orderInfo);
+    order.save();
+
+    await Product.updateOne({
+        _id: cartId
+    },{products: []})
+
+    res.redirect(`/checkout/success/${order.id}`);
+}

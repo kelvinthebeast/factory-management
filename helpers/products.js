@@ -6,15 +6,19 @@ module.exports.priceNewProducts = (products)=> {
     return newProducts;
 }
 // tính giá của 1 sản phẩm
-// module.exports.priceNewProduct = (product)=> {
-//     const priceNew = (product.price*(100 - product.discountPercentage) / 100).toFixed(0);
-//     return parseInt(priceNew);
-// }
-
-module.exports.priceNewProduct = (product) => {
-    // Tính giá mới và làm tròn nó về số nguyên
-    const priceNew = product.price * (100 - product.discountPercentage) / 100;
-    
-    // Trả về số nguyên của giá mới
-    return Math.round(priceNew);
+module.exports.priceNewProduct = (product)=> {
+    if (typeof product.price !== "number" || typeof product.discountPercentage !== "number") {
+        console.error("Dữ liệu sản phẩm không hợp lệ để tính giá:", product);
+        return 0; // Trả về 0 nếu dữ liệu không hợp lệ
+    }
+    const priceNew = (product.price*(100 - product.discountPercentage) / 100).toFixed(0);
+    return parseInt(priceNew);
 }
+
+// module.exports.priceNewProduct = (product) => {
+//     // Tính giá mới và làm tròn nó về số nguyên
+//     const priceNew = product.price * (100 - product.discountPercentage) / 100;
+    
+//     // Trả về số nguyên của giá mới
+//     return Math.round(priceNew);
+// }

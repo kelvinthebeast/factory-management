@@ -57,9 +57,9 @@ block main
                   td
                     img(src=item.productInfo.thumbnail, alt=item.productInfo.title, width="80px")
                   td #{item.productInfo.title}
-                  td #{item.priceNew ? item.priceNew : 0}$ // Check if priceNew is valid
+                  td #{item.priceNew ? item.priceNew : 0}$
                   td #{item.quantity}
-                  td #{item.totalPrice ? item.totalPrice : 0}$ // Check if totalPrice is valid
+                  td #{item.totalPrice ? item.totalPrice : 0}$ 
             else
               tr
                 td(colspan="6" class="text-center") No products in the order.
