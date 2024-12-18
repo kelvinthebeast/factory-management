@@ -28,3 +28,59 @@ module.exports.registerPost = async (req, res) => {
 }
 
 // [get] /user/login
+
+module.exports.login = async (req, res) => {
+    res.render("client/pages/user/login.pug", {
+        pageTitle: "Trang đăng nhập"
+    });
+}
+
+
+// [post] /user/login
+
+// module.exports.loginPost = async (req, res) => {
+//     const email = req.body.email;
+//     const password = (req.body.password);
+
+//     const user = await User.findOne({ email: email, password: password });
+//     if (!user) {
+//         req.flash("error", "Tài khoản hoặc mật khẩu không đúng");
+//         res.redirect("/user/login");
+//         return;
+//     }
+
+//     if(md5(password) !== user.password) {
+//         req.flash("error", "Sai mật khẩu");
+//         res.redirect("back");
+//         return;
+//     }
+//     if(user.status === "locked") {
+//         res.flash("success", "Tài khoản bị khóa");
+//         res.redirect("back");
+//         return;
+//     }
+
+//     res.cookie("tokenUser", user.tokenUser);
+//     res.redirect("/");
+// }
+module.exports.loginPost = async (req, res) => {
+    const email = req.body.email;
+    const password = md5(req.body.password); // Mã hóa mật khẩu đầu vào
+
+    // Tìm kiếm người dùng với email và mật khẩu đã mã hóa
+    const user = await User.findOne({ email: email, deleted: false});
+    if (!user) {
+        req.flash("error", "Tài khoản hoặc mật khẩu không đúng");
+        return res.redirect("/user/login");
+    }
+
+    // Kiểm tra trạng thái tài khoản
+    if (user.status === "locked") {
+        req.flash("error", "Tài khoản bị khóa");
+        return res.redirect("back");
+    }
+
+    // Lưu tokenUser vào cookie và chuyển hướng
+    res.cookie("tokenUser", user.tokenUser);
+    res.redirect("/");
+};
