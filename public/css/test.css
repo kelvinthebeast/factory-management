@@ -377,6 +377,7 @@ header .inner-menu .sub-menu-content a:hover {
 /* sub menu */
 /* Submenu */
 /* Submenu */
+/* Submenu */
 .sub-menu {
   position: relative;
   z-index: 999;
@@ -389,16 +390,17 @@ header .inner-menu .sub-menu-content a:hover {
   list-style: none;
   padding: 0;
   margin: 0;
-  background: #eae9e9;
-  min-width: 180px;
-  display: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  background: #ffffff; /* Đổi màu nền sang trắng */
+  min-width: 200px; /* Điều chỉnh kích thước tối thiểu */
+  display: none; /* Ẩn menu con */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Làm bóng menu */
+  border-radius: 6px; /* Làm bo tròn góc */
+  border: 1px solid #ddd; /* Viền nhẹ */
 }
 
 .sub-menu ul li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px; /* Tăng khoảng cách */
+  border-bottom: 1px solid #eee; /* Màu viền nhẹ hơn */
   position: relative;
 }
 
@@ -406,8 +408,9 @@ header .inner-menu .sub-menu-content a:hover {
   border-bottom: none;
 }
 
-.sub-menu:hover > ul {
-  display: block;
+.sub-menu:hover > ul,
+.sub-menu:focus-within > ul {
+  display: block; /* Hiển thị menu khi hover hoặc focus */
 }
 
 .sub-menu ul li ul {
@@ -426,23 +429,48 @@ header .inner-menu .sub-menu-content a:hover {
   list-style: none;
   padding: 0;
   margin: 0;
-  background: #eae9e9;
-  min-width: 180px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  background: #ffffff; /* Giữ đồng bộ màu nền */
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  border: 1px solid #ddd;
 }
 
 .sub-menu ul li a {
   text-decoration: none;
-  color: #333;
-  padding: 10px;
+  color: #333; /* Màu chữ chính */
+  padding: 12px;
   display: block;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .sub-menu ul li a:hover {
-  background-color: #f8f9fa;
-  color: #007bff;
+  background-color: #f0f0f0; /* Màu nền khi hover */
+  color: #007bff; /* Màu chữ nổi bật */
+}
+
+/* Căn chỉnh thêm để gọn gàng */
+.sub-menu ul {
+  padding: 5px 0; /* Tạo khoảng cách trên dưới của menu */
+}
+
+.sub-menu ul li {
+  padding: 8px 16px; /* Điều chỉnh padding trong item */
+}
+
+/* Hiệu ứng mượt hơn khi hiện menu */
+.sub-menu ul {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.sub-menu:hover > ul,
+.sub-menu:focus-within > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 
