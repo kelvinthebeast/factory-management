@@ -127,5 +127,47 @@ module.exports.forgotPasswordPost = async (req, res)=> {
 
     // nếu có email thì gửi mã otp
     
-    res.send("OKE FORGOT PASSWORDS");
+    res.redirect(`/user/password/otp?email=${email}`);
+}
+
+// [get] /user/password/otp 
+module.exports.otpPassword = async (req, res) => {
+    const email = req.query.email;
+
+    res.render("client/pages/user/otp-password", {
+        pageTitle: "Xác nhận mã OTP",
+        email: email
+    })
+}
+
+// [post] /user/password/otp 
+module.exports.otpPasswordPost = async (req, res) => {
+    const email = req.body.email;
+    const otp = req.body.otp;
+
+
+    const result = await ForgotPassword.findOne({ email: email, otp: otp });
+
+
+
+    if (!result) {
+        req.flash("error", "Mã OTP không đúng");
+        return res.redirect(`/user/password/otp?email=${email}`);
+    }
+// chạy xuống đây tức là kết quả đúng
+
+    const user = await User.findOne({email: email});
+
+
+    res.cookie("tokenUser", user.tokenUser); // vì sao có bước này, vì khi qua bước đổi mật khẩu ngta có thể sẽ f12 và 
+    // sửa email khác lúc đó email đó bị sửa mk thì sao, nên là lấy tokenUser cái duy nhất trên máy check là an toàn nhất
+    res.redirect("/user/password/reset");
+}
+
+
+
+module.exports.resetPassword = async (req, res) => {
+    res.render("client/pages/user/reset-password.pug", {
+        pageTitle: "Đặt lại mật khẩu"
+    });
 }
