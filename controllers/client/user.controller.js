@@ -165,9 +165,24 @@ module.exports.otpPasswordPost = async (req, res) => {
 }
 
 
-
+// [get] /user/password/reset 
 module.exports.resetPassword = async (req, res) => {
     res.render("client/pages/user/reset-password.pug", {
         pageTitle: "Đặt lại mật khẩu"
     });
+}
+
+// [post] /user/password/reset 
+module.exports.resetPasswordPost = async (req, res) => {
+
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+
+    const tokenUser = req.cookies.tokenUser;
+
+    await User.updateOne({tokenUser: tokenUser}, {
+        password: md5(password)
+    })
+    req.flash("success","Đặt lại mật khẩu thành công");
+    res.redirect("/");
 }
