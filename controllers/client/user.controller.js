@@ -6,6 +6,8 @@ const generateHelper = require("../../helpers/generate");
 const ForgotPassword = require("../../models/forgot-password.model");
 
 const sendMailHelper = require("../../helpers/sendMail")
+
+const Cart = require("../../models/cart.model");
 // [get] /user/register
 module.exports.register = async (req, res) => {
     res.render("client/pages/user/register.pug", {
@@ -87,6 +89,12 @@ module.exports.loginPost = async (req, res) => {
     }
 
     // Lưu tokenUser vào cookie và chuyển hướng
+    await Cart.updateOne({
+        _id: req.cookies.cartId
+    }, {
+        user_id: user.id,
+    })
+
     res.cookie("tokenUser", user.tokenUser);
     res.redirect("/");
 };
