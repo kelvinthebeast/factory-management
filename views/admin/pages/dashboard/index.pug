@@ -1,5 +1,63 @@
 extends ../../layouts/default.pug
+
 block main
-    h1 Trang tổng quan
-    #{user}
-    #{role.permissions}
+  h1 Trang tổng quan
+
+  .row.mt-4
+    .col-12
+      .card.mb-4
+        .card-header Thông tin tài khoản
+        .card-body
+          if (user.avatar)
+            img(src=user.avatar style="height: 100px;margin-bottom: 15px;")
+          if (user.fullName)
+            p Họ tên: b #{user.fullName}
+          if (user.email)
+            p Email: b #{user.email}
+          if (user.phone)
+            p Số điện thoại: b #{user.phone}
+          if (role.title)
+            p Phân quyền: b #{role.title}
+            
+  .row
+    .col-6
+      .card.mb-4
+        .card-header Danh mục sản phẩm
+        .card-body
+          p Số lượng: 
+            b #{statistic.ProductCategory.total}
+          p Hoạt động: 
+            b #{statistic.productCategory.active}
+          p Dừng hoạt động: 
+            b #{statistic.productCategory.inactive}
+
+    .col-6
+      .card.mb-4
+        .card-header Sản phẩm
+        .card-body
+          p Số lượng: 
+            b 5
+          p Hoạt động: 
+            b 3
+          p Dừng hoạt động: 
+            b 2
+    .col-6
+      .card.mb-4
+        .card-header Toàn khoản admin
+        .card-body
+          p Số lượng: 
+            b 5
+          p Hoạt động: 
+            b 3
+          p Dừng hoạt động: 
+            b 2
+    .col-6
+      .card.mb-4
+        .card-header Toàn khoản client
+        .card-body
+          p Số lượng: 
+            b 5
+          p Hoạt động: 
+            b 3
+          p Dừng hoạt động: 
+            b 2
