@@ -722,3 +722,131 @@ button:hover {
 }
 
 /* end show alert */
+
+
+/* Chat */
+/* Tổng thể container */
+.chat-container {
+  max-width: 500px;
+  margin: 20px auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Phần thân chat */
+.chat-body {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 400px; /* Để khung chat không vượt quá chiều cao */
+}
+
+/* Tin nhắn đến (incoming) */
+.chat-incoming {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.chat-incoming .chat-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 3px;
+}
+
+.chat-incoming .chat-content {
+  background-color: #f1f0f0;
+  color: #333;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.9rem;
+  max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tin nhắn gửi đi (outgoing) */
+.chat-outgoing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.chat-outgoing .chat-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 3px;
+}
+
+.chat-outgoing .chat-content {
+  background-color: #dcf8c6;
+  color: #333;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.9rem;
+  max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần chân chat (form nhập) */
+.chat-footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+}
+
+.chat-form {
+  display: flex;
+  width: 100%;
+}
+
+.chat-input {
+  flex-grow: 1;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 0.9rem;
+  outline: none;
+  margin-right: 10px;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+  border-color: #007bff;
+}
+
+.chat-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chat-button:hover {
+  background-color: #0056b3;
+}
+
+.chat-button i {
+  font-size: 1.2rem;
+}
+
+/* ENd chat */
