@@ -46,6 +46,8 @@ app.set("views", `${__dirname}/views`);
 
 
 
+
+
 const systemConfig = require("./config/system")
 const database = require("./config/database");
 database.connect();
@@ -53,7 +55,11 @@ database.connect();
 // app local variables 
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // tu h prefixAdmin se xuat hien trog tat ca file pug
 app.locals.moment = moment;
-
+app.get("*", (req, res)=> {
+    res.render("client/pages/errors/404.pug", {
+        pageTitle: "Page Not Found"
+    })
+})
 app.listen(port, () => {
     console.log(`App listen on port ${port}`);
 
