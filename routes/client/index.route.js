@@ -6,6 +6,8 @@ const homeRoutes = require("./home.route");
 const searchRoutes = require("./search.route");
 
 const cartMiddleware = require("../../middlewares/client/cart.middleware");
+
+const settingMiddleware = require("../../middlewares/client/setting.middleware");
 const cartRoutes = require("../../routes/client/cart.route");
 const checkoutRoutes = require("../../routes/client/checkout.route");
 const userRoutes = require("../../routes/client/user.route");
@@ -16,7 +18,12 @@ module.exports = (app) => {
     // luôn luôn có middleware này
     app.use(categoryMiddleware.category);
 
+    
+
     app.use(userMiddleware.infoUser);
+
+
+    app.use(settingMiddleware.settingGeneral);
 
     app.use(cartMiddleware.cartId);
     app.use("/",homeRoutes);
