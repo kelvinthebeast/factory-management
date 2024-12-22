@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Socket.IO chat</title>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 3rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        #form {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.25rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            height: 3rem;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+
+        #input {
+            border: none;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 2rem;
+            margin: 0.25rem;
+        }
+
+        #input:focus {
+            outline: none;
+        }
+
+        #form>button {
+            background: #333;
+            border: none;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages>li {
+            padding: 0.5rem 1rem;
+        }
+
+        #messages>li:nth-child(odd) {
+            background: #efefef;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 id="socket-id"></h1>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Lắng nghe sự kiện 'SERVER_SEND_SOCKET_ID' từ server
+        socket.on("SERVER_SEND_SOCKET_ID", (data) => {
+            const elementSocketIo = document.querySelector("#socket-id");
+            elementSocketIo.textContent = `Socket ID: ${data}`;
+            console.log("Socket ID received: ", data);
+        });
+
+        // Xử lý gửi tin nhắn khi nhấn nút "Send"
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Ngăn chặn việc gửi lại form
+
+            const message = input.value.trim();
+            if (message) {
+                socket.emit('CLIENT_SEND_MESSAGE', message);
+                input.value = ''; // Xóa input sau khi gửi tin nhắn
+            }
+        });
+
+        // Lắng nghe sự kiện 'SERVER_BROADCAST_MESSAGE' từ server (nếu có)
+        socket.on("SERVER_BROADCAST_MESSAGE", (msg) => {
+            const messages = document.querySelector("#messages");
+            const li = document.createElement('li');
+            li.textContent = msg;
+            messages.appendChild(li);
+        });
+    </script>
+</body>
+
+</html>
