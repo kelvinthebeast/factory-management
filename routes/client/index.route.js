@@ -12,7 +12,7 @@ const cartRoutes = require("../../routes/client/cart.route");
 const checkoutRoutes = require("../../routes/client/checkout.route");
 const userRoutes = require("../../routes/client/user.route");
 const chatRoutes = require("../../routes/client/chat.route");
-
+const authMiddleware = require("../../middlewares/client/auth.middleware")
 module.exports = (app) => {
     // app.use("/", homeRoutes);
     // luôn luôn có middleware này
@@ -37,7 +37,7 @@ module.exports = (app) => {
 
     app.use("/user", userRoutes);
  
-    app.use("/chat", chatRoutes);
+    app.use("/chat",authMiddleware.requireAuth ,chatRoutes);
 
    
 }
