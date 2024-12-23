@@ -8,33 +8,19 @@ block main
       .col-12
         +box-head("Chat")
 
-   
-    .chat-container
-      .chat-body
-        .chat-incoming
-          .chat-name Em Yêu
-          .chat-content
-            | Ừ, anh sang nhà em nha, nhà em không có ai ở nhà cả
-        .chat-outgoing
-          .chat-name Anh Yêu
-          .chat-content
-            | Thế à? Ok, em yêu
-        .chat-incoming
-          .chat-name Em Yêu
-          .chat-content
-            | Nhanh nha, nhanh nha
-        .chat-outgoing
-          .chat-name Anh Yêu
-          .chat-content
-            | Ừ, đến rồi mà thấy ai ở nhà đâu em? Khóa cửa mà :)
-        .chat-incoming
-          .chat-name Em Yêu
-          .chat-content
-            | Thì em bảo nhà em không ai ở nhà mà :)
+    .chat
+      .chat-container
+        .chat-body
+          each chat in chats
+            div(class=(chat.user_id==user.id ? "chat-incoming" : "chat-outgoing"))
+              if(chat.user_id!=user.id)
+                .chat-name #{item.infoUser.fullName}
+              .chat-content
+                | #{chat.content}
+           
 
-
-      .chat-footer
-        form.chat-form(action="", method="POST")
-          input.chat-input(type="text" placeholder="Nhập nội dung..." name="content" required)
-          button.chat-button(type="submit")
-            i.fa-solid.fa-paper-plane
+        .chat-footer
+          form.chat-form(action="", method="POST")
+            input.chat-input(type="text" placeholder="Nhập nội dung..." name="content" required)
+            button.chat-button(type="submit")
+              i.fa-solid.fa-paper-plane
