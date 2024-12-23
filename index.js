@@ -18,6 +18,9 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
+//socket io config
+const http = require('http');
+const {Server} = require("socket.io");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +40,13 @@ const adminRoute = require("./routes/admin/index.route");
 
 
 const port = process.env.PORT;
+//socketIo config
+const server = http.createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log("a user connected ",socket.id);
+});
+//end socket
 // routes
 route(app);
 adminRoute(app);
@@ -60,7 +70,7 @@ app.get("*", (req, res)=> {
         pageTitle: "Page Not Found"
     })
 })
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`App listen on port ${port}`);
 
 })
