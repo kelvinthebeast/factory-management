@@ -8,7 +8,7 @@ block main
       .col-12
         +box-head("Chat")
 
-    .chat
+    .chat(my-id=user.id)
       .chat-container
         .chat-body
           each chat in chats
