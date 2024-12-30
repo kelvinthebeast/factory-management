@@ -22,5 +22,8 @@ block main
         .chat-footer
           form.chat-form(action="", method="POST")
             input.chat-input(type="text" placeholder="Nhập nội dung..." name="content" required)
+            span(class="button-icon") Icon
             button.chat-button(type="submit")
               i.fa-solid.fa-paper-plane
+  div(class="tooltip" role="tooltip")
+    .emoji-picker

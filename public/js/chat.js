@@ -46,3 +46,37 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     // Cuộn xuống cuối vùng chứa
     body.scrollTop = body.scrollHeight;
 });
+
+
+// emoji picker
+// const buttonIcon = document.querySelector('.button-icon');
+// if (buttonIcon) {
+//     const tooltip = document.querySelector('.tooltip');
+//     Popper.createPopper(buttonIcon, tooltip);
+//     buttonIcon.addEventListener('click', () => {
+//         tooltip.classList.toggle('show');
+//     });
+// }
+
+const buttonIcon = document.querySelector('.button-icon');
+if (buttonIcon) {
+  const tooltip = document.querySelector('.tooltip');
+  
+  // Attach popper for positioning (optional, ensure Popper.js is included)
+  Popper.createPopper(buttonIcon, tooltip, {
+    placement: 'top', // Adjust as needed
+  });
+  
+  // Toggle the emoji picker on touch/click
+  buttonIcon.addEventListener('click', () => {
+    tooltip.classList.toggle('shown');
+  });
+
+  // Optional: Hide when clicking outside
+  document.addEventListener('click', (event) => {
+    if (!buttonIcon.contains(event.target) && !tooltip.contains(event.target)) {
+      tooltip.classList.remove('shown');
+    }
+  });
+}
+// end emoji picker

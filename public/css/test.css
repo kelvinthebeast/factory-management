@@ -850,3 +850,14 @@ button:hover {
 }
 
 /* ENd chat */
+
+/* Emoji icon */
+.tooltip {
+  visibility: hidden;
+}
+
+.tooltip.shown{
+  visibility: visible;
+  opacity: 1;
+}
+/* end emoji icon */
